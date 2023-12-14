@@ -9,7 +9,7 @@ def set_lang(lang):
     st.session_state["show_form"] = True
 def set_collect_status():
     st.session_state["collect_status"] = True
-    st.session_state.show_form = False4
+    st.session_state.show_form = False
 
 
 
