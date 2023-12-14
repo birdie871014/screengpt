@@ -6,8 +6,10 @@ def set_lang(lang):
     if "messages" in st.session_state:
         del st.session_state.messages
     st.session_state.language = lang
+    st.session_state["show_form"] = True
 def set_collect_status():
     st.session_state["collect_status"] = True
+    st.session_state.show_form = False4
 
 
 
@@ -22,14 +24,14 @@ if "language" in st.session_state:
     texts = {}
     with open("./lang.json") as io:
         texts = json.load(io)[st.session_state.language]
-
-    with st.form(key='collect_data'):
-        st.text(texts["form_header"])
-        st.session_state["age"] = st.number_input(label=texts['age'])
-        st.session_state["sex"] = st.selectbox(texts['sex'], [texts['male'], texts['female']])
-        st.session_state["weight"] = st.number_input(label=texts["weight"])
-        st.session_state["height"] = st.number_input(label=texts["height"])
-        st.form_submit_button(label="OK", on_click=set_collect_status)
+    if st.session_state.show_form:
+        with st.form(key='collect_data'):
+            st.text(texts["form_header"])
+            st.session_state["age"] = st.number_input(label=texts['age'])
+            st.session_state["sex"] = st.selectbox(texts['sex'], [texts['male'], texts['female']])
+            st.session_state["weight"] = st.number_input(label=texts["weight"])
+            st.session_state["height"] = st.number_input(label=texts["height"])
+            st.form_submit_button(label="OK", on_click=set_collect_status)
 
     
 if "collect_status" in st.session_state:
