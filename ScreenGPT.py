@@ -13,7 +13,8 @@ def set_collect_status():
 
 
 
-st.title("Welcome to ScreenGPT 🧑‍⚕️")
+st.title("Welcome to ScreenGPT 👨🏽‍⚕️")
+
 col1, col2, col3, col4 = st.columns([0.4, 0.1, 0.1, 0.4])
 col1.text('Please select language!')
 col2.button(label='EN', on_click=set_lang, args=['english'])
