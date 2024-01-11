@@ -42,12 +42,16 @@ def collect_ok():
     st.session_state["collect_status"] = True
 
 
-st.title("Welcome to ScreenGPT 👨🏽‍⚕️")
+col_logo, col_head = st.columns([0.2, 0.8])
+with col_logo:
+    st.image("./logo.png", use_column_width=True)
+with col_head:
+    st.title("Welcome to ScreenGPT 👨🏽‍⚕️")
 
-col1, col2, col3, col4 = st.columns([0.4, 0.1, 0.1, 0.4])
-col1.text('Please select language!')
-col2.button(label='EN', on_click=set_lang, args=['english'])
-col3.button(label='HU', on_click=set_lang, args=['hungarian'])
+    col1, col2, col3, col4 = st.columns([0.4, 0.15, 0.15, 0.3])
+    col1.text('Please select language!')
+    col2.button(label='EN', on_click=set_lang, args=['english'])
+    col3.button(label='HU', on_click=set_lang, args=['hungarian'])
 
 
 if "language" in st.session_state:
@@ -77,7 +81,6 @@ if "collect_status" in st.session_state:
         for msg in st.session_state.messages:
             if msg["role"] != "system":
                 st.chat_message(msg["role"]).write(msg["content"])
-        
 
         if prompt := st.chat_input():
             st.session_state.messages.append({"role": "user", "content": prompt})
