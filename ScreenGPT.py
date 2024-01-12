@@ -25,6 +25,7 @@ def read_from_jsonbin(id):
         st.session_state['read_ok'] = True
         st.session_state['data'] = json.loads(response.text)['record']
         st.session_state['messages'] = st.session_state.data['messages']
+        st.session_state['show_form'] = False
         return True
     else: 
         st.session_state['readerror'] = True
