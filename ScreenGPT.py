@@ -3,6 +3,8 @@ import streamlit as st
 import json
 import requests
 
+st.set_page_config(initial_sidebar_state="expanded")
+
 #functions
 def post_to_jsonbin():
     url = 'https://api.jsonbin.io/v3/b'
@@ -81,6 +83,7 @@ if "readerror" not in st.session_state:
 if "show_form" not in st.session_state:
     st.session_state['show_form'] = True
 
+
 #heading
 col_logo, col_head = st.columns([0.2, 0.8])
 with col_logo:
@@ -116,9 +119,6 @@ if "language" in st.session_state:
             if len(st.session_state.sessionID) > 0 and st.session_state.read_ok == False:
                 st.session_state['collect_status'] = read_from_jsonbin(st.session_state.sessionID)
                 st.rerun()
-        
-        
-    
 
     if st.session_state.collect_status:
         client = OpenAI(api_key=st.secrets["OpenaiKey"])
@@ -147,6 +147,6 @@ if "language" in st.session_state:
             st.session_state.messages.append({"role": "assistant", "content": msg})
             st.chat_message("assistant").write(msg)
             put_to_jsonbin(st.session_state.sessionID)
-
-
+        
+        st.markdown(f"<p style='text-align: right; font-size: 12px'>Session ID : {st.session_state.sessionID}</p>", unsafe_allow_html=True)
 
