@@ -133,10 +133,12 @@ if "language" in st.session_state:
             with st.sidebar:
                 st.write(texts['write_ID'])
                 st.text(st.session_state.sessionID)
-                st.write(texts['ID_description'])
+                st.markdown(f"<p style='text-align: justify'>{texts['ID_description']}</p>", unsafe_allow_html=True)
+                st.markdown(f"<p style='text-align: justify'>{texts['feedback']}</p>", unsafe_allow_html=True)
+                st.link_button(texts['feedback_label'], texts['feedback_url'])
         #create first message
         if "messages" not in st.session_state:            
-            st.session_state["messages"] = [{"role": "system", "content": f"In this conversation you are the assistant developed for assist lifestyle change. At first introduce yourself. The user who asks is {st.session_state.data['age']} years old {st.session_state.data['height']} cm tall and has {st.session_state.data['weight']} kg body weight. The language of this conversation is {st.session_state.language}. The gender of the user in the language of the conversation is '{st.session_state.data['sex']}'. Please give personalized answers, and allways note the gender. In your answer evaluate users BMI index! If it is out of the normal range, give an advice how to reach the ideal body weight. You are a healthcare tool. Answer only the questions about lifestyle change!"}]
+            st.session_state["messages"] = [{"role": "system", "content": f"{st.secrets['sysprompt_0']} {st.session_state.data['age']} {st.secrets['sysprompt_1']} {st.session_state.data['height']} {st.secrets['sysprompt_2']} {st.session_state.data['weight']} {st.secrets['sysprompt_3']} {st.session_state.language} {st.secrets['sysprompt_4']} {st.session_state.data['sex']} {st.secrets['sysprompt_5']}"}]
             response = client.chat.completions.create(model="gpt-4", temperature=0.2, messages=st.session_state.messages)
             msg = response.choices[0].message.content
             st.session_state.messages.append({"role": "assistant", "content": msg})
