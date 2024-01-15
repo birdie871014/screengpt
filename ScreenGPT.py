@@ -94,19 +94,17 @@ with col_logo:
 with col_head:
     st.title("Welcome to ScreenGPT 👨🏽‍⚕️ beta")
     
-
-
 if "language" in st.session_state:
+#load texts
     texts = {}
     with open("./lang.json") as io:
         texts = json.load(io)[st.session_state.language]
     
-
     with st.sidebar:
-        
+    #display read error
         if st.session_state.readerror == True:
                 st.write(texts['readeror'])
-        
+    #form
         if st.session_state.show_form:    
             with st.form(key='collect_data'):
                 st.write(texts["form_header"])
@@ -114,10 +112,11 @@ if "language" in st.session_state:
                 st.session_state.data["sex"] = st.selectbox(texts['sex'], [texts['male'], texts['female']])
                 st.session_state.data["weight"] = st.number_input(label=texts["weight"])
                 st.session_state.data["height"] = st.number_input(label=texts["height"])
+                st.markdown(f"<p style='text-align: justify; font-size: 12px'>{texts['disclaimer']}</p>", unsafe_allow_html=True)
                 st.form_submit_button(label="OK", on_click=collect_ok)
                 if st.session_state.collect_status == True and len(st.session_state.sessionID) == 0:
                     st.write(texts['wait'])
-        
+    #load session
         if st.session_state.collect_status == False:
             st.write(texts['askForCode'])
             st.session_state['sessionID'] = st.text_input('ID')
@@ -125,14 +124,17 @@ if "language" in st.session_state:
                 if read_from_jsonbin(st.session_state.sessionID):
                     collect_ok()
                 st.rerun()
-
+    #chat started
     if st.session_state.collect_status:
+        #create openAI class object
         client = OpenAI(api_key=st.secrets["OpenaiKey"])
+        #write the sessin ID to sidebar
         if len(st.session_state.sessionID) > 0:
             with st.sidebar:
                 st.write(texts['write_ID'])
                 st.text(st.session_state.sessionID)
                 st.write(texts['ID_description'])
+        #create first message
         if "messages" not in st.session_state:            
             st.session_state["messages"] = [{"role": "system", "content": f"In this conversation you are the assistant developed for assist lifestyle change. At first introduce yourself. The user who asks is {st.session_state.data['age']} years old {st.session_state.data['height']} cm tall and has {st.session_state.data['weight']} kg body weight. The language of this conversation is {st.session_state.language}. The gender of the user in the language of the conversation is '{st.session_state.data['sex']}'. Please give personalized answers, and allways note the gender. In your answer evaluate users BMI index! If it is out of the normal range, give an advice how to reach the ideal body weight. You are a healthcare tool. Answer only the questions about lifestyle change!"}]
             response = client.chat.completions.create(model="gpt-4", temperature=0.2, messages=st.session_state.messages)
@@ -141,11 +143,11 @@ if "language" in st.session_state:
             post_to_jsonbin()
             st.session_state['show_form'] = False
             st.rerun()
-        
+        #write out meaasges
         for msg in st.session_state.messages:
             if msg["role"] != "system":
                 st.chat_message(msg["role"]).write(msg["content"])
-
+        #input and answer user prompt
         if prompt := st.chat_input():
             st.session_state.messages.append({"role": "user", "content": prompt})
             st.chat_message("user").write(prompt)
@@ -154,6 +156,6 @@ if "language" in st.session_state:
             st.session_state.messages.append({"role": "assistant", "content": msg})
             st.chat_message("assistant").write(msg)
             put_to_jsonbin(st.session_state.sessionID)
-        
+        #write out session ID under the chat
         st.markdown(f"<p style='text-align: right; font-size: 12px'>Session ID : {st.session_state.sessionID}</p>", unsafe_allow_html=True)
 
