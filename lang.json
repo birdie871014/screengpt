@@ -14,7 +14,10 @@
         "ID_description" : "If you want to continue this conversation later, please save the session ID!",
         "readeror" : "An error occurred while loading session",
         "wait" : "Please wait for the chat to start!",
-        "disclaimer" : "Please be aware that ScreenGPT is currently in its beta testing phase, meaning the application is under development and may contain errors or inaccuracies. By using ScreenGPT, you acknowledge that it should not be used for medical diagnosis or treatment decisions and should not replace consultation with a qualified healthcare professional. Any data entered during testing is not stored or shared with any third parties, ensuring your privacy and the confidentiality of your input. Your participation and feedback are crucial for improving ScreenGPT's performance and reliability. We appreciate your participation in this project!"
+        "disclaimer" : "Please be aware that ScreenGPT is currently in its beta testing phase, meaning the application is under development and may contain errors or inaccuracies. By using ScreenGPT, you acknowledge that it should not be used for medical diagnosis or treatment decisions and should not replace consultation with a qualified healthcare professional. Any data entered during testing is not stored or shared with any third parties, ensuring your privacy and the confidentiality of your input. Your participation and feedback are crucial for improving ScreenGPT's performance and reliability. We appreciate your participation in this project!", 
+        "feedback" : "",
+        "feedback_label" : "",
+        "feedback_url" : ""
 
     },
     "hungarian" : {
@@ -32,8 +35,10 @@
         "ID_description" : "Amennyiben később szeretné folytatni ezt a beszélgetést, kérem mentse el a munkamenet azonosítóját!",
         "readeror" : "Hiba történt a beolvasás során",
         "wait" : "Kérjük, várjon amíg a csevegés elindul!",
-        "disclaimer" : "Kérjük, vegyék figyelembe, hogy a ScreenGPT jelenleg béta tesztelési fázisban van, vagyis az alkalmazás fejlesztés alatt áll így tartalmazhat hibákat, pontatlanságokat. A ScreenGPT használatával Ön tudomásul veszi, hogy a kapott válaszok nem minősülnek orvosi diagnózisnak vagy kezelési döntések meghozatalának alapjául, valamint nem helyettesíthetik az egészségügyi szakemberrel történő konzultációt. A tesztelés során megadott adatokat nem tároljuk és harmadik félnek nem adjuk ki. A visszajelzések nélkülözhetetlenek a ScreenGPT teljesítményének és megbízhatóságának javításához. Köszönjük hogy részt vesz a projektben!"
-
+        "disclaimer" : "Kérjük, vegyék figyelembe, hogy a ScreenGPT jelenleg béta tesztelési fázisban van, vagyis az alkalmazás fejlesztés alatt áll így tartalmazhat hibákat, pontatlanságokat. A ScreenGPT használatával Ön tudomásul veszi, hogy a kapott válaszok nem minősülnek orvosi diagnózisnak vagy kezelési döntések meghozatalának alapjául, valamint nem helyettesíthetik az egészségügyi szakemberrel történő konzultációt. A tesztelés során megadott adatokat biztonságosan tároljuk, a beszélgetés személyre szabásához, és az alkalmazás továbbfejlesztéséhez használjuk fel. Harmadik félnek nem adjuk ki. Köszönjük, hogy részt vesz a projektben!",
+        "feedback" : "A visszajelzések nélkülözhetetlenek a ScreenGPT teljesítményének és megbízhatóságának javításához. Kérjük, hogy a következő linkre kattintva töltse ki a kérdőívet:",
+        "feedback_label" : "Kérdőív kitöltése",
+        "feedback_url" : "https://docs.google.com/forms/d/e/1FAIpQLSe0haIgguscAbV5gvllJtGB2Lx9_kdG-yZhLgGvSFPprpuH5Q/viewform"
     }
 }
 
