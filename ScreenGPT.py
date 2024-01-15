@@ -6,6 +6,13 @@ import requests
 st.set_page_config(initial_sidebar_state="expanded")
 
 #functions
+def detect_mobile_device():
+    user_agent = st.request.headers.get("User-Agent")
+    if "Mobile" in user_agent:
+        return True
+    else:
+        return False
+    
 def post_to_jsonbin():
     url = 'https://api.jsonbin.io/v3/b'
     headers = {
@@ -52,10 +59,11 @@ def set_lang(lang):
     if "messages" in st.session_state:
         del st.session_state.messages
     st.session_state.language = lang
-    st.session_state["collect_status"] = False
 
 def collect_ok():
     st.session_state["collect_status"] = True
+    if detect_mobile_device():
+        st.sidebar.checkbox("Show sidebar", False, key=1)
 
 #select language
 with st.sidebar:
@@ -117,7 +125,8 @@ if "language" in st.session_state:
             st.write(texts['askForCode'])
             st.session_state['sessionID'] = st.text_input('ID')
             if len(st.session_state.sessionID) > 0 and st.session_state.read_ok == False:
-                st.session_state['collect_status'] = read_from_jsonbin(st.session_state.sessionID)
+                if read_from_jsonbin(st.session_state.sessionID):
+                    collect_ok()
                 st.rerun()
 
     if st.session_state.collect_status:
