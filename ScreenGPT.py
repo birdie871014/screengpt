@@ -6,13 +6,7 @@ import requests
 st.set_page_config(initial_sidebar_state="expanded")
 
 #functions
-def detect_mobile_device():
-    user_agent = st.request.headers.get("User-Agent")
-    if "Mobile" in user_agent:
-        return True
-    else:
-        return False
-    
+
 def post_to_jsonbin():
     url = 'https://api.jsonbin.io/v3/b'
     headers = {
@@ -62,8 +56,6 @@ def set_lang(lang):
 
 def collect_ok():
     st.session_state["collect_status"] = True
-    if detect_mobile_device():
-        st.sidebar.checkbox("Show sidebar", False, key=1)
 
 #select language
 with st.sidebar:
