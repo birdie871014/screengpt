@@ -12,7 +12,8 @@
         "askForCode" : "If you want to resume a previous session, you can enter the ID here.",
         "write_ID" : "Your session ID is:",
         "ID_description" : "If you want to continue this conversation later, please save the session ID!",
-        "readeror" : "An error occurred while loading session"
+        "readeror" : "An error occurred while loading session",
+        "wait" : "Please wait for the chat to start!"
 
     },
     "hungarian" : {
@@ -28,6 +29,8 @@
         "askForCode" : "Ha korábbi munkamenetet szeretne folytatni, akkor itt megadhatja az azonosítót.",
         "write_ID" : "A munkamenet azonosítója:",
         "ID_description" : "Amennyiben később szeretné folytatni ezt a beszélgetést, kérem mentse el a munkamenet azonosítóját!",
-        "readeror" : "Hiba történt a beolvasás során"
+        "readeror" : "Hiba történt a beolvasás során",
+        "wait" : "Kérjük, várjon amíg a csevegés elindul!"
+
     }
 }

@@ -29,6 +29,7 @@ def read_from_jsonbin(id):
         st.session_state['data'] = json.loads(response.text)['record']
         st.session_state['messages'] = st.session_state.data['messages']
         st.session_state['show_form'] = False
+        st.session_state['readerror'] = False
         return True
     else: 
         st.session_state['readerror'] = True
@@ -82,6 +83,8 @@ if "readerror" not in st.session_state:
     st.session_state['readerror'] = False
 if "show_form" not in st.session_state:
     st.session_state['show_form'] = True
+if "sessionID" not in st.session_state:
+    st.session_state['sessionID'] = ""
 
 
 #heading
@@ -112,6 +115,8 @@ if "language" in st.session_state:
                 st.session_state.data["weight"] = st.number_input(label=texts["weight"])
                 st.session_state.data["height"] = st.number_input(label=texts["height"])
                 st.form_submit_button(label="OK", on_click=collect_ok)
+                if st.session_state.collect_status == True and len(st.session_state.sessionID) == 0:
+                    st.write(texts['wait'])
         
         if st.session_state.collect_status == False:
             st.write(texts['askForCode'])
@@ -123,10 +128,11 @@ if "language" in st.session_state:
 
     if st.session_state.collect_status:
         client = OpenAI(api_key=st.secrets["OpenaiKey"])
-        with st.sidebar:
-            st.write(texts['write_ID'])
-            st.text(st.session_state.sessionID)
-            st.write(texts['ID_description'])
+        if len(st.session_state.sessionID) > 0:
+            with st.sidebar:
+                st.write(texts['write_ID'])
+                st.text(st.session_state.sessionID)
+                st.write(texts['ID_description'])
         if "messages" not in st.session_state:            
             st.session_state["messages"] = [{"role": "system", "content": f"In this conversation you are the assistant developed for assist lifestyle change. At first introduce yourself. The user who asks is {st.session_state.data['age']} years old {st.session_state.data['height']} cm tall and has {st.session_state.data['weight']} kg body weight. The language of this conversation is {st.session_state.language}. The gender of the user in the language of the conversation is '{st.session_state.data['sex']}'. Please give personalized answers, and allways note the gender. In your answer evaluate users BMI index! If it is out of the normal range, give an advice how to reach the ideal body weight. You are a healthcare tool. Answer only the questions about lifestyle change!"}]
             response = client.chat.completions.create(model="gpt-4", temperature=0.2, messages=st.session_state.messages)
