@@ -14,10 +14,10 @@
         "ID_description" : "If you want to continue this conversation later, please save the session ID!",
         "readeror" : "An error occurred while loading session",
         "wait" : "Please wait for the chat to start!",
-        "disclaimer" : "Please be aware that ScreenGPT is currently in its beta testing phase, meaning the application is under development and may contain errors or inaccuracies. By using ScreenGPT, you acknowledge that it should not be used for medical diagnosis or treatment decisions and should not replace consultation with a qualified healthcare professional. Any data entered during testing is not stored or shared with any third parties, ensuring your privacy and the confidentiality of your input. Your participation and feedback are crucial for improving ScreenGPT's performance and reliability. We appreciate your participation in this project!", 
-        "feedback" : "",
-        "feedback_label" : "",
-        "feedback_url" : ""
+        "disclaimer" : "Please note that ScreenGPT is currently in the beta testing phase, which means that the application is still under development and may contain errors or inaccuracies. By using ScreenGPT, you acknowledge that the responses you receive are not considered medical diagnoses or the basis for treatment decisions, and they cannot replace consultation with a healthcare professional. The data provided during the conversation with ScreenGPT is securely stored to improve the personalization of conversations and for further application development, and will not be disclosed to third parties. We appreciate your participation in this project!", 
+        "feedback" : "Feedback is essential for improving the performance and reliability of ScreenGPT. Please klick the button below and fill the survey!",
+        "feedback_label" : "Go to survey",
+        "feedback_url" : "https://docs.google.com/forms/d/e/1FAIpQLSe0haIgguscAbV5gvllJtGB2Lx9_kdG-yZhLgGvSFPprpuH5Q/viewform"
 
     },
     "hungarian" : {
