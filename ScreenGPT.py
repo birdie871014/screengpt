@@ -60,7 +60,7 @@ def collect_ok():
 
 #select language
 with st.sidebar:
-    st.image('./banner.png', use_column_width=True)
+    st.image('./images/banner.png', use_column_width=True)
     if "language" not in st.session_state:
         st.text('Please select language!')
         col1, col2, blankcol = st.columns([0.25, 0.25, 0.5]) 
@@ -90,7 +90,7 @@ if "sessionID" not in st.session_state:
 #heading
 col_logo, col_head = st.columns([0.2, 0.8])
 with col_logo:
-    st.image("./logo.png", use_column_width=True)
+    st.image("./images/logo.png", use_column_width=True)
 with col_head:
     st.title("Welcome to ScreenGPT 👨🏽‍⚕️ beta")
     
