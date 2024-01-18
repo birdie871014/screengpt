@@ -149,6 +149,8 @@ if "language" in st.session_state:
         for msg in st.session_state.messages:
             if msg["role"] != "system":
                 st.chat_message(msg["role"]).write(msg["content"])
+        #write out session ID under the chat
+        st.markdown(f"<p style='text-align: right; font-size: 12px'>Session ID : {st.session_state.sessionID}</p>", unsafe_allow_html=True)
         #input and answer user prompt
         if prompt := st.chat_input():
             st.session_state.messages.append({"role": "user", "content": prompt})
@@ -158,6 +160,4 @@ if "language" in st.session_state:
             st.session_state.messages.append({"role": "assistant", "content": msg})
             st.chat_message("assistant").write(msg)
             put_to_jsonbin(st.session_state.sessionID)
-        #write out session ID under the chat
-        st.markdown(f"<p style='text-align: right; font-size: 12px'>Session ID : {st.session_state.sessionID}</p>", unsafe_allow_html=True)
-
+        
