@@ -160,4 +160,10 @@ if "language" in st.session_state:
             st.session_state.messages.append({"role": "assistant", "content": msg})
             st.chat_message("assistant").write(msg)
             put_to_jsonbin(st.session_state.sessionID)
-        
+#linkedin logo        
+with st.sidebar:
+    st.markdown("""
+                <a href='https://www.linkedin.com/company/screengpt/about/'>
+                    <img src='https://logos-world.net/wp-content/uploads/2020/05/Linkedin-Logo.png', alt='follow us on Linkedin'>
+                </a>
+                """, unsafe_allow_html=True)
