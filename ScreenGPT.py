@@ -81,7 +81,7 @@ if "sessionID" not in st.session_state:
 #heading
 col_logo, col_head = st.columns([0.2, 0.8])
 col_logo.image("./images/logo.png", use_column_width=True)
-col_head.title(":blue[Welcome to ScreenGPT 👨🏽‍⚕️ beta]")
+col_head.title(":violet[Welcome to ScreenGPT 👨🏽‍⚕️ beta]")
 with st.sidebar:
     st.image("./images/banner.png", use_column_width=True)
 #select language
