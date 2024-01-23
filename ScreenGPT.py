@@ -87,8 +87,8 @@ with st.sidebar:
 #select language
 
 if "language" not in st.session_state:
-    st.title(':violet[Please select language!]')
-    col1, col2, col3, col4 = st.columns([0.4, 0.1, 0.1, 0.4]) 
+    col1, col2, col3, col4 = st.columns([0.4, 0.1, 0.1, 0.4])
+    col1.text('Please select language!')
     col2.button(label='EN', on_click=set_lang, args=['english'])
     col3.button(label='HU', on_click=set_lang, args=['hungarian'])
 
