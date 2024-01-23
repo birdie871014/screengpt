@@ -3,6 +3,7 @@ import streamlit as st
 import json
 import requests
 
+st.set_page_config(page_title="ScreenGPT", page_icon="👨🏽‍⚕️")
 
 #functions
 
