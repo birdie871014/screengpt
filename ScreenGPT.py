@@ -157,7 +157,7 @@ if "language" in st.session_state:
             st.chat_message("assistant").write(msg)
             put_to_jsonbin(st.session_state.sessionID)
         #write out session ID under the chat
-        st.markdown(f"""<div style='border: 2px solid blue; border-radius: 10px; color: white; background-color: blue; position: fixed; bottom: 110px; right: 20px'>
+        st.markdown(f"""<div style='border: 2px solid blue; border-radius: 10px; color: white; background-color: blue; position: fixed; bottom: 110px; right: 30%'>
                             <p style='color: white; text-align: right; font-size: 12px'>&#160;&#160;&#160; Session ID : {st.session_state.sessionID} &#160;&#160;&#160;</p>
                         </div>""", unsafe_allow_html=True)
 
