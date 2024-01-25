@@ -1,7 +1,7 @@
 {
     "english" : {
-        "greeting" : "I'm a professional healthcare tool, designed for assist to change your Lifestyle.",
         "form_header" : "If yuo want to start a new session please enter the details below to personalize the conversation!",
+        "zero_value_warning" : "Please fill the form for start a new conversation!",
         "lang" : "Choose language!",
         "age" : "Age (years)",
         "sex" : "Biological gender",
@@ -21,8 +21,8 @@
 
     },
     "hungarian" : {
-        "greeting" : "Én egy professionális egészségügyi asszisztens vagyok, és arra terveztek, hogy segítselek az életmód váltásban.",
         "form_header" : "Ha új munkamenetet szeretne indítani, kérem, adja meg az alábbi adatokat a beszélgetés személyreszabásához!",
+        "zero_value_warning" : "Kérem, töltse ki az űrlapot a beszélgetés megkezdéséhez!",
         "lang" : "Válassz nyelvet!",
         "age" : "Életkor (év)",
         "sex" : "Biológiai nem",
