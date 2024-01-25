@@ -168,7 +168,7 @@ if "language" in st.session_state:
 #linkedin logo        
 with st.sidebar:
     st.markdown("""
-                <div style="text-align: center; height: 80px; width:120px;  position: fixed; bottom: 0px; background-color: white; border: 2px solid white; border-radius: 18px">
+                <div style="text-align: center; height: 80px; width:120px;  position: fixed; bottom: 20px; background-color: rgba(255,255,255,0.5); border: 0px; border-radius: 20px">
                     <p style="margin-bottom: 0; color: black">Follow Us!</p>
                     <a href='https://www.linkedin.com/company/screengpt/about/'>
                         <img src='https://logos-world.net/wp-content/uploads/2020/05/Linkedin-Logo.png', alt='follow us on Linkedin', border=0, width=100px>
