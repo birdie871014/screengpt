@@ -3,7 +3,7 @@ import streamlit as st
 import json
 import requests
 
-st.set_page_config(page_title="ScreenGPT", page_icon="👨🏽‍⚕️")
+st.set_page_config(page_title="ScreenGPT", page_icon='./images/logo.png', menu_items={"About" : "https://www.linkedin.com/company/screengpt/about/"})
 
 #functions
 
@@ -87,6 +87,7 @@ col_logo.image("./images/logo.png", use_column_width=True)
 col_head.title(":violet[Welcome to ScreenGPT 👨🏽‍⚕️ beta]")
 with st.sidebar:
     st.image("./images/banner.png", use_column_width=True)
+
 #select language
 
 if "language" not in st.session_state:
