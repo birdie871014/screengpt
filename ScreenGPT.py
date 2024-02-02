@@ -56,7 +56,7 @@ def set_lang(lang):
     st.session_state.language = lang
 
 def collect_ok():
-    if any(v == 0 for v in st.session_state['data'].values()):
+    if any((v == 0 or v == " ") for v in st.session_state['data'].values()):
         st.warning(texts['zero_value_warning'])
     else:
         st.session_state['collect_status'] = True
