@@ -65,7 +65,7 @@ def collect_ok():
 if "data" not in st.session_state:
     st.session_state['data'] = {
         "age" : 0,
-        "sex" : "Male",
+        "sex" : 0,
         "weight" : 0,
         "height" : 0,
     }
@@ -111,7 +111,7 @@ if "language" in st.session_state:
         with st.form(key='collect_data'):
             st.write(texts["form_header"])
             st.session_state.data["age"] = st.number_input(label=texts['age'], min_value=0, step=1)
-            st.session_state.data["sex"] = st.selectbox(texts['sex'], [texts['male'], texts['female']])
+            st.session_state.data["sex"] = st.selectbox(texts['sex'], [" ", texts['male'], texts['female']])
             st.session_state.data["weight"] = st.number_input(label=texts["weight"], min_value=0, step=1)
             st.session_state.data["height"] = st.number_input(label=texts["height"], min_value=0, step=1)
             st.markdown(f"<p style='text-align: justify; font-size: 12px'>{texts['disclaimer']}</p>", unsafe_allow_html=True)
