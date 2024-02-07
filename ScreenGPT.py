@@ -111,13 +111,15 @@ if "language" in st.session_state:
         with st.form(key='collect_data'):
             st.write(texts["form_header"])
             st.session_state.data["age"] = st.number_input(label=texts['age'], min_value=0, step=1)
-            st.session_state.data["sex"] = st.selectbox(texts['sex'], [" ", texts['male'], texts['female']])
+            st.session_state.data["sex"] = st.selectbox(texts['sex'], [texts['male'], texts['female']])
             st.session_state.data["weight"] = st.number_input(label=texts["weight"], min_value=0, step=1)
             st.session_state.data["height"] = st.number_input(label=texts["height"], min_value=0, step=1)
             st.markdown(f"<p style='text-align: justify; font-size: 12px'>{texts['disclaimer']}</p>", unsafe_allow_html=True)
-            st.form_submit_button(label="OK", on_click=collect_ok)
+            submit = st.form_submit_button(label="OK")
             if st.session_state.collect_status == True and len(st.session_state.sessionID) == 0:
                 st.write(texts['wait'])
+        if submit:
+            collect_ok()
 #load session
     if st.session_state.collect_status == False:
         st.write(texts['askForCode'])
