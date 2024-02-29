@@ -5,6 +5,8 @@ import requests
 
 st.set_page_config(page_title="ScreenGPT", page_icon='./images/logo.png', menu_items={"About" : "https://www.linkedin.com/company/screengpt/about/"})
 
+st.info('Kedves Látogató! Örömmel tájékoztatjuk, hogy a "ScreenGPT - Mesterséges intelligencia alkalmazásának lehetőségei és korlátai a primer, szekunder és tercier prevencióban" című kériratot az Orvosi Hetilap 2024. 02. 29. napjával megjelentetésre befogadta.')
+st.balloons()
 #functions
 
 def post_to_jsonbin():
