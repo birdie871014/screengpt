@@ -87,8 +87,6 @@ col_logo.image("./images/logo.png", use_column_width=True)
 col_head.title(":violet[Welcome to ScreenGPT 👨🏽‍⚕️ beta]")
 with st.sidebar:
     st.image("./images/banner.png", use_column_width=True)
-st.info('Kedves Látogató! Örömmel tájékoztatjuk, hogy a "ScreenGPT - Mesterséges intelligencia alkalmazásának lehetőségei és korlátai a primer, szekunder és tercier prevencióban" című kériratot az Orvosi Hetilap 2024. 02. 29. napjával megjelentetésre befogadta.')
-st.balloons()
 
 #select language
 
