@@ -1,54 +1,14 @@
 from openai import OpenAI
 import streamlit as st
 import json
-import requests
+from jsonbin_functions import *
 
-st.set_page_config(page_title="ScreenGPT", page_icon='./images/logo.png', menu_items={"About" : "https://www.linkedin.com/company/screengpt/about/"})
+
+st.set_page_config(layout="wide", page_title="ScreenGPT", page_icon='./images/logo.png', menu_items={"About" : "https://www.linkedin.com/company/screengpt/about/"})
+
 
 #functions
 
-def post_to_jsonbin():
-    url = 'https://api.jsonbin.io/v3/b'
-    headers = {
-    'Content-Type': 'application/json',
-    'X-Master-Key': st.secrets["jsonBinKey"]
-    }
-    st.session_state.data["messages"] = st.session_state.messages
-    
-    st.session_state["bin"] = requests.post(url, json=st.session_state.data, headers=headers)
-    st.session_state["sessionID"] = st.session_state.bin.json()["metadata"]["id"]
-
-def read_from_jsonbin(id):
-    url = f'https://api.jsonbin.io/v3/b/{id}/latest'
-    headers = {
-    'X-Master-Key': st.secrets["jsonBinKey"]
-    }
-    response = requests.get(url, json=None, headers=headers)
-    if response.status_code == 200:
-        st.session_state['read_ok'] = True
-        st.session_state['data'] = json.loads(response.text)['record']
-        st.session_state['messages'] = st.session_state.data['messages']
-        st.session_state['show_form'] = False
-        st.session_state['readerror'] = False
-        return True
-    else: 
-        st.session_state['readerror'] = True
-        st.session_state['sessionID'] = ""
-        return False
-
-
-def put_to_jsonbin(id):
-    if "update_counter" not in st.session_state:
-        st.session_state["update_counter"] = 1
-    else:
-        st.session_state.update_counter += 1
-    url = f'https://api.jsonbin.io/v3/b/{id}'
-    headers = {
-    'Content-Type': 'application/json',
-    'X-Master-Key': st.secrets['jsonBinKey']
-    }
-    st.session_state.data['messages'] = st.session_state.messages
-    st.session_state[f"jsonbin_put_response{st.session_state.update_counter}"] = requests.put(url, json=st.session_state.data, headers=headers)
 
 def set_lang(lang):
     if "messages" in st.session_state:
@@ -82,19 +42,19 @@ if "sessionID" not in st.session_state:
 
 
 #heading
-col_logo, col_head = st.columns([0.2, 0.8])
-col_logo.image("./images/logo.png", use_column_width=True)
-col_head.title(":violet[Welcome to ScreenGPT 👨🏽‍⚕️ beta]")
+
+st.image("./images/banner.png", use_column_width=True)
+st.markdown("<h1 style='color: #5e17eb; text-align: center'>Welcome to ScreenGPT 👨🏽‍⚕️ beta</h1>", unsafe_allow_html=True)
 with st.sidebar:
-    st.image("./images/banner.png", use_column_width=True)
+    st.image("./images/logo.png", use_column_width=True)
 
 #select language
 
 if "language" not in st.session_state:
     col1, col2, col3, col4 = st.columns([0.4, 0.1, 0.1, 0.4])
-    col1.text('Please select language!')
-    col2.button(label='EN', on_click=set_lang, args=['english'])
-    col3.button(label='HU', on_click=set_lang, args=['hungarian'])
+    col1.write('Please select language!')
+    col2.button(label='🇬🇧', on_click=set_lang, args=['english'])
+    col3.button(label='🇭🇺', on_click=set_lang, args=['hungarian'])
 
 
 if "language" in st.session_state:
@@ -107,6 +67,7 @@ if "language" in st.session_state:
     if st.session_state.readerror == True:
             st.write(texts['readeror'])
 #form
+    
     if st.session_state.show_form:    
         with st.form(key='collect_data'):
             st.write(texts["form_header"])
