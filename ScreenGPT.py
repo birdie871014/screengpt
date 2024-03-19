@@ -103,7 +103,7 @@ if "language" in st.session_state:
                 st.link_button(texts['feedback_label'], texts['feedback_url'])
         #create first message
         if "messages" not in st.session_state:            
-            st.session_state["messages"] = [{"role": "system", "content": f"{st.secrets['sysprompt_0']} {st.session_state.data['age']} {st.secrets['sysprompt_1']} {st.session_state.data['height']} {st.secrets['sysprompt_2']} {st.session_state.data['weight']} {st.secrets['sysprompt_3']} {st.session_state.language} {st.secrets['sysprompt_4']} {st.session_state.data['sex']} {st.secrets['sysprompt_5']}"}]
+            st.session_state["messages"] = [{"role": "system", "content": st.secrets['lifestyle_sysprompt'].format(st.session_state.data['age'], st.session_state.data['height'], st.session_state.data['weight'], st.session_state.language, st.session_state.data['sex'])}]
             response = client.chat.completions.create(model="gpt-4", temperature=0.2, messages=st.session_state.messages)
             msg = response.choices[0].message.content
             st.session_state.messages.append({"role": "assistant", "content": msg})
