@@ -1,15 +1,17 @@
 {
     "english" : {
-        "form_header" : "If yuo want to start a new session please enter the details below to personalize the conversation!",
+        "form_header" : "Please enter the details below to personalize the conversation!",
         "zero_value_warning" : "Please fill the form for start a new conversation!",
         "lang" : "Choose language!",
+        "select_topic" : "Please select topic!",
+        "lifestyle" : "Lifestyle change",
+        "cervical" : "Cervical screening",
         "age" : "Age (years)",
-        "sex" : "Biological gender",
-        "male" : "Male",
-        "female" : "Female",
+        "gender" : "Biological gender",
+        "gender_options" : ["Male", "Female"],
         "weight" : "Weight (kg)",
         "height" : "Height (cm)",
-        "askForCode" : "If you want to resume a previous session, you can enter the ID here.",
+        "askForCode" : "Or if you want to resume a previous session, you can enter the ID here.",
         "write_ID" : "Your session ID is:",
         "ID_description" : "If you want to continue this conversation later, please save the session ID!",
         "readeror" : "An error occurred while loading session",
@@ -17,20 +19,26 @@
         "disclaimer" : "Please note that ScreenGPT is currently in the beta testing phase, which means that the application is still under development and may contain errors or inaccuracies. By using ScreenGPT, you acknowledge that the responses you receive are not considered medical diagnoses or the basis for treatment decisions, and they cannot replace consultation with a healthcare professional. The data provided during the conversation with ScreenGPT is securely stored to improve the personalization of conversations and for further application development, and will not be disclosed to third parties. We appreciate your participation in this project!", 
         "feedback" : "Feedback is essential for improving the performance and reliability of ScreenGPT. Please klick the button below and fill the survey!",
         "feedback_label" : "Go to survey",
-        "feedback_url" : "https://forms.gle/NdZtgZzhp9G4jPnG7"
+        "feedback_url" : "https://forms.gle/NdZtgZzhp9G4jPnG7",
+        "hpv_label" : "Have you received the HPV vaccine?", 
+        "hpv_options" : ["Yes", "No"],
+        "brca_label" : "Have you had a BRCA gene test?", 
+        "brca_options" : ["Yes, it was positive", "Yes, it was negative", "No"]
 
     },
     "hungarian" : {
-        "form_header" : "Ha új munkamenetet szeretne indítani, kérem, adja meg az alábbi adatokat a beszélgetés személyreszabásához!",
+        "form_header" : "Kérem, adja meg az alábbi adatokat a beszélgetés személyreszabásához!",
         "zero_value_warning" : "Kérem, töltse ki az űrlapot a beszélgetés megkezdéséhez!",
         "lang" : "Válassz nyelvet!",
+        "select_topic" : "Válassz témát!",
+        "lifestyle" : "Életmódváltás",
+        "cervical" : "Méhnyakrák szűrés",
         "age" : "Életkor (év)",
-        "sex" : "Biológiai nem",
-        "male" : "férfi",
-        "female" : "nő",
+        "gender" : "Biológiai nem",
+        "gender_options" : ["Férfi", "Nő"],
         "weight" : "Testsúly (kg)",
         "height" : "Magasság (cm)",
-        "askForCode" : "Ha korábbi munkamenetet szeretne folytatni, akkor itt megadhatja az azonosítót.",
+        "askForCode" : "Vahy ha korábbi munkamenetet szeretne folytatni, akkor itt megadhatja az azonosítót.",
         "write_ID" : "A munkamenet azonosítója:",
         "ID_description" : "Amennyiben később szeretné folytatni ezt a beszélgetést, kérem mentse el a munkamenet azonosítóját!",
         "readeror" : "Hiba történt a beolvasás során",
@@ -38,7 +46,11 @@
         "disclaimer" : "Kérjük, vegyék figyelembe, hogy a ScreenGPT jelenleg béta tesztelési fázisban van, vagyis az alkalmazás fejlesztés alatt áll így tartalmazhat hibákat, pontatlanságokat. A ScreenGPT használatával Ön tudomásul veszi, hogy a kapott válaszok nem minősülnek orvosi diagnózisnak vagy kezelési döntések meghozatalának alapjául, valamint nem helyettesíthetik az egészségügyi szakemberrel történő konzultációt. A tesztelés során megadott adatokat biztonságosan tároljuk, a beszélgetés személyre szabásához, és az alkalmazás továbbfejlesztéséhez használjuk fel. Harmadik félnek nem adjuk ki. Köszönjük, hogy részt vesz a projektben!",
         "feedback" : "A visszajelzések nélkülözhetetlenek a ScreenGPT teljesítményének és megbízhatóságának javításához. Kérjük, hogy a következő linkre kattintva töltse ki a kérdőívet:",
         "feedback_label" : "Kérdőív kitöltése",
-        "feedback_url" : "https://forms.gle/v7FxfogmyLHyervt7"
+        "feedback_url" : "https://forms.gle/v7FxfogmyLHyervt7", 
+        "hpv_label" : "Részesült HPV oltásban?", 
+        "hpv_options" : ["Igen", "Nem"],
+        "brca_label" : "Végeztek Önnél BRCA gén tesztet?", 
+        "brca_options" : ["Igen, pozitív eredménnyel", "Igen, negatív eredménnyel", "Nem"]
     }
 }
 
