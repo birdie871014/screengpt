@@ -130,6 +130,7 @@ if "language" in st.session_state:
                 st.session_state.data["gender"] = st.selectbox(texts['gender'], texts["gender_options"])
                 st.session_state.data["weight"] = st.number_input(label=texts["weight"], min_value=0, step=1)
                 st.session_state.data["height"] = st.number_input(label=texts["height"], min_value=0, step=1)
+                
                 st.markdown(f"<p style='text-align: justify; font-size: 12px'>{texts['disclaimer']}</p>", unsafe_allow_html=True)
                 submit = st.form_submit_button(label="OK")
                 if st.session_state.collect_status == True and len(st.session_state.sessionID) == 0:
