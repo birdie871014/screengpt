@@ -4,7 +4,7 @@ import json
 from jsonbin_functions import *
 
 
-st.set_page_config(layout="wide", page_title="ScreenGPT", page_icon='./images/logo.png', menu_items={"About" : "https://www.linkedin.com/company/screengpt/about/"})
+st.set_page_config(page_title="ScreenGPT", page_icon='./images/logo.png', menu_items={"About" : "https://www.linkedin.com/company/screengpt/about/"})
 
 
 #functions
