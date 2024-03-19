@@ -131,11 +131,10 @@ if "language" in st.session_state:
             st.session_state.data["age"] = st.number_input(label=texts['age'], min_value=0, step=1)
             st.session_state.data["weight"] = st.number_input(label=texts["weight"], min_value=0, step=1)
             st.session_state.data["height"] = st.number_input(label=texts["height"], min_value=0, step=1)
-            match st.session_state.data["topic"]:
-                case "lifestyle":
-                    st.session_state.data["gender"] = st.selectbox(texts['gender'], texts["gender_options"])
-                case "cervical":
-                    st.session_state.data["hpv"] = st.selectbox(texts['hpv_label'], texts['hpv_options'])
+            if st.session_state.data["topic"] == "lifestyle":
+                st.session_state.data["gender"] = st.selectbox(texts['gender'], texts["gender_options"])
+            if st.session_state.data["topic"] == "cervical":
+                st.session_state.data["hpv"] = st.selectbox(texts['hpv_label'], texts['hpv_options'])
             st.markdown(f"<p style='text-align: justify; font-size: 12px'>{texts['disclaimer']}</p>", unsafe_allow_html=True)
             submit = st.form_submit_button(label="OK")
             if st.session_state.collect_status == True and len(st.session_state.sessionID) == 0:
@@ -164,11 +163,10 @@ if "language" in st.session_state:
                 st.link_button(texts['feedback_label'], texts['feedback_url'])
         #create first message
         if "messages" not in st.session_state:            
-            match st.session_state.data["topic"]:
-                case "lifestyle":
-                    st.session_state["messages"] = [{"role": "system", "content": st.secrets['lifestyle_sysprompt'].format(st.session_state.data['age'], st.session_state.data['height'], st.session_state.data['weight'], st.session_state.language, st.session_state.data['gender'])}]
-                case "cervical":
-                    st.session_state["messages"] = [{"role": "system", "content": st.secrets['cervical_sysprompt_1'].format(st.session_state.data['age'], st.session_state.data['height'], st.session_state.data['weight'], st.session_state.language, st.session_state.data['hpv'])}]
+            if st.session_state.data["topic"] == "lifestyle":
+                st.session_state["messages"] = [{"role": "system", "content": st.secrets['lifestyle_sysprompt'].format(st.session_state.data['age'], st.session_state.data['height'], st.session_state.data['weight'], st.session_state.language, st.session_state.data['gender'])}]
+            if st.session_state.data["topic"] == "cervical":
+                st.session_state["messages"] = [{"role": "system", "content": st.secrets['cervical_sysprompt_1'].format(st.session_state.data['age'], st.session_state.data['height'], st.session_state.data['weight'], st.session_state.language, st.session_state.data['hpv'])}]
             
             response = client.chat.completions.create(model="gpt-4", temperature=0.2, messages=st.session_state.messages)
             msg = response.choices[0].message.content
