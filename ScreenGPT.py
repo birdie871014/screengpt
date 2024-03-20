@@ -10,22 +10,22 @@ st.image("./images/banner.png", use_column_width=True)
 with st.sidebar:
     st.image("./images/logo.png", use_column_width=True)        
     st.markdown("""
-                <div style="text-align: center; height: 80px; width:120px;  position: fixed; bottom: 20px; background-color: rgba(255,255,255,0.5); border: 0px; border-radius: 20px">
-                    <p style="margin-bottom: 0; color: black">Follow Us!</p>
+                <div style="text-align: center; height: 40px; width:120px;  position: fixed; bottom: 20px">
                     <a href='https://www.linkedin.com/company/screengpt/about/'>
                         <img src='https://logos-world.net/wp-content/uploads/2020/05/Linkedin-Logo.png', alt='follow us on Linkedin', border=0, width=100px>
                     </a>
                 </div>
                 """, unsafe_allow_html=True)
-if "lang_selected" not in st.session_state:
-    st.session_state.lang_selected = False
+if "started" not in st.session_state:
+    st.session_state.started = False
+
 if "jb_headers" not in st.session_state:
     st.session_state.jb_headers = {'Content-Type': 'application/json', 'X-Master-Key': st.secrets["jsonBinKey"]}
         
 def load_lang(lang):
     with open("./lang.json") as io:
         st.session_state.texts = json.load(io)[lang]
-        st.session_state.lang_selected = True
+        st.session_state.started = True
 def select_topic(topic):
     st.session_state.messages.append({"role" : "user", "content" : st.session_state.texts['first_user_prompt'].format(topic)})
     if topic == st.session_state.texts['lifestyle']:
@@ -35,13 +35,34 @@ def select_topic(topic):
         with open("./system_prompts.json") as io:
             st.session_state.system_prompts = json.load(io)['cervical']
     st.session_state.messages.append({"role" : "system", "content" : st.session_state.system_prompts['init']})
+def load_session(id):
+    url = f'https://api.jsonbin.io/v3/b/{id}/latest'
+    headers = {
+    'X-Master-Key': st.secrets["jsonBinKey"]
+    }
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        st.session_state['messages'] = response.json()['record']
+        load_lang("english")
+        return True
+    else: 
+        st.error("An error occurred while loading session")
+        st.session_state['sessionID'] = ""
+        return False
 
-if not st.session_state.lang_selected:
+if not st.session_state.started:
     st.markdown("<h1 style='color: #5e17eb; text-align: center'>Welcome to ScreenGPT 👨🏽‍⚕️ beta! <br> Please select language!</h1>", unsafe_allow_html=True)
     col0, col1, col2, col3= st.columns([0.3, 0.2, 0.2, 0.3])
     col1.button("English", on_click=load_lang, kwargs={"lang" : "english"})
     col2.button("Hungarian", on_click=load_lang, kwargs={"lang" : "hungarian"})
-if st.session_state.lang_selected:
+    st.markdown(f"<h3 style='color: #5e17eb; text-align: center'>or <br> If you want to resume a previous session, you can enter the ID here.</h1>", unsafe_allow_html=True)
+    st.session_state['sessionID'] = st.text_input('ID')
+    if len(st.session_state.sessionID) > 0:
+        loaded = load_session(st.session_state.sessionID)
+        if loaded:
+            st.rerun()
+
+if st.session_state.started:
     client = OpenAI(api_key=st.secrets["OpenaiKey"])
     if "messages" not in st.session_state:
         st.session_state['messages'] = [{"role" : "assistant", "content" : st.session_state.texts['greeting']}]
@@ -62,6 +83,13 @@ if st.session_state.lang_selected:
         st.session_state.sessionID = response.json()["metadata"]["id"]
         st.rerun()
     else:
+        with st.sidebar:
+                st.write(st.session_state.texts['write_ID'])
+                st.text(st.session_state.sessionID)
+                st.markdown(f"<p style='text-align: justify'>{st.session_state.texts['ID_description']}</p>", unsafe_allow_html=True)
+                st.markdown(f"<p style='text-align: justify'>{st.session_state.texts['feedback']}</p>", unsafe_allow_html=True)
+                st.link_button(st.session_state.texts['feedback_label'], st.session_state.texts['feedback_url'])
+        
         if prompt := st.chat_input():
             st.session_state.messages.append({"role": "user", "content": prompt})
             st.chat_message("user").write(prompt)
@@ -74,3 +102,5 @@ if st.session_state.lang_selected:
             st.session_state.messages.append({"role": "assistant", "content": msg})
             st.chat_message("assistant").write(msg)
             requests.put(url=f'https://api.jsonbin.io/v3/b/{st.session_state.sessionID}', json=st.session_state.messages, headers=st.session_state.jb_headers)
+            
+            
