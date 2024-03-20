@@ -30,7 +30,7 @@
     },
     "hungarian" : {
         "greeting" : "Üdvözöllek! A nevem ScreenGPT. Én vagyok a Te professzionális egészségügyi asszisztensed. Küldetésem, hogy segítselek egy egészségesebb életmód kialakításában, és hasznos információkkal szolgáljak a megelőzés terén. Kérlek, válaszd ki a témakört, amelyik foglalkoztat!",
-        "first_user_prompt" : "A téma amitől beszélgetni szeretnék a {}",
+        "first_user_prompt" : "A téma, amitől beszélgetni szeretnék a(z) {}",
         "form_header" : "Kérem, adja meg az alábbi adatokat a beszélgetés személyreszabásához!",
         "zero_value_warning" : "Kérem, töltse ki az űrlapot a beszélgetés megkezdéséhez!",
         "lang" : "Válassz nyelvet!",
