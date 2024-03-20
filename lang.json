@@ -1,11 +1,13 @@
 {
     "english" : {
+        "greeting" : "Hello! I'm ScreenGPT, your professional healthcare assistant. My mission is to help you lead a healthier lifestyle and provide you with information for prevention. Please choose the topic you are interested in!",
+        "first_user_prompt" : "The topic I would like to talk about is {}",
         "form_header" : "Please enter the details below to personalize the conversation!",
         "zero_value_warning" : "Please fill the form for start a new conversation!",
         "lang" : "Choose language!",
         "select_topic" : "Please select topic!",
         "lifestyle" : "Lifestyle change",
-        "cervical" : "Cervical screening",
+        "cervical" : "Cervical cancer prevention",
         "age" : "Age (years)",
         "gender" : "Biological gender",
         "gender_options" : ["Male", "Female"],
@@ -27,12 +29,14 @@
 
     },
     "hungarian" : {
+        "greeting" : "Üdvözöllek! A nevem ScreenGPT, a Te professzionális egészségügyi asszisztensed. Küldetésem, hogy segítselek egy egészségesebb életmód kialakításában, és hasznos információkkal szolgáljak a megelőzés terén. Kérlek, válaszd ki a témakört, amelyik foglalkoztat!",
+        "first_user_prompt" : "A téma amitől beszélgetni szeretnék a {}",
         "form_header" : "Kérem, adja meg az alábbi adatokat a beszélgetés személyreszabásához!",
         "zero_value_warning" : "Kérem, töltse ki az űrlapot a beszélgetés megkezdéséhez!",
         "lang" : "Válassz nyelvet!",
         "select_topic" : "Válassz témát!",
         "lifestyle" : "Életmódváltás",
-        "cervical" : "Méhnyakrák szűrés",
+        "cervical" : "Méhnyakrák smegelőzés",
         "age" : "Életkor (év)",
         "gender" : "Biológiai nem",
         "gender_options" : ["Férfi", "Nő"],
