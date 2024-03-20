@@ -35,7 +35,6 @@ def select_topic(topic):
         with open("./system_prompts.json") as io:
             st.session_state.system_prompts = json.load(io)['cervical']
     st.session_state.messages.append({"role" : "system", "content" : st.session_state.system_prompts['init']})
-        
 
 if not st.session_state.lang_selected:
     st.markdown("<h1 style='color: #5e17eb; text-align: center'>Welcome to ScreenGPT 👨🏽‍⚕️ beta! <br> Please select language!</h1>", unsafe_allow_html=True)
@@ -50,11 +49,13 @@ if st.session_state.lang_selected:
         if msg["role"] != "system":
             st.chat_message(msg["role"]).write(msg["content"])
     if len(st.session_state.messages) == 1:
-        col0, col1, col2 = st.columns([0.2, 0.4, 0.4])
-        col1.button(st.session_state.texts['lifestyle'], on_click=select_topic, kwargs={"topic" : st.session_state.texts['lifestyle']})
-        col2.button(st.session_state.texts['cervical'], on_click=select_topic, kwargs={"topic" : st.session_state.texts['cervical']})
+        col0, col1 = st.columns([0.6, 0.4])
+        col1.button(st.session_state.texts['lifestyle'], on_click=select_topic, kwargs={"topic" : st.session_state.texts['lifestyle']}, use_container_width=True)
+        col1.button(st.session_state.texts['cervical'], on_click=select_topic, kwargs={"topic" : st.session_state.texts['cervical']}, use_container_width=True)
     elif len(st.session_state.messages) == 3:
+        wait_info = st.info(st.session_state.texts['wait'])
         response = client.chat.completions.create(model="gpt-4", temperature=0.2, messages=st.session_state.messages)
+        wait_info.empty()
         msg = response.choices[0].message.content
         st.session_state.messages.append({"role": "assistant", "content": msg})
         response = requests.post(url='https://api.jsonbin.io/v3/b', json=st.session_state.messages, headers=st.session_state.jb_headers)        
@@ -66,7 +67,9 @@ if st.session_state.lang_selected:
             st.chat_message("user").write(prompt)
             if len(st.session_state.messages) == 4:
                 st.session_state.messages.append({"role": "system", "content": st.session_state.system_prompts['ans_1']})
+            wait_info = st.info(st.session_state.texts['wait'])
             response = client.chat.completions.create(model="gpt-4", temperature=0.3, messages=st.session_state.messages)
+            wait_info.empty()
             msg = response.choices[0].message.content
             st.session_state.messages.append({"role": "assistant", "content": msg})
             st.chat_message("assistant").write(msg)
