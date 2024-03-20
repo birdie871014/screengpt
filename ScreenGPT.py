@@ -25,6 +25,7 @@ if "jb_headers" not in st.session_state:
 def load_lang(lang):
     with open("./lang.json") as io:
         st.session_state.texts = json.load(io)[lang]
+        st.session_state.language = lang
         st.session_state.started = True
 def select_topic(topic):
     st.session_state.messages.append({"role" : "user", "content" : st.session_state.texts['first_user_prompt'].format(topic)})
@@ -42,8 +43,9 @@ def load_session(id):
     }
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
-        st.session_state['messages'] = response.json()['record']
-        load_lang("english")
+        data = response.json()['record']
+        st.session_state['messages'] = data['messages']
+        load_lang(data['language'])
         return True
     else: 
         st.error("An error occurred while loading session")
@@ -79,7 +81,7 @@ if st.session_state.started:
         wait_info.empty()
         msg = response.choices[0].message.content
         st.session_state.messages.append({"role": "assistant", "content": msg})
-        response = requests.post(url='https://api.jsonbin.io/v3/b', json=st.session_state.messages, headers=st.session_state.jb_headers)        
+        response = requests.post(url='https://api.jsonbin.io/v3/b', json={"language" : st.session_state.language, "messages" : st.session_state.messages}, headers=st.session_state.jb_headers)        
         st.session_state.sessionID = response.json()["metadata"]["id"]
         st.rerun()
     else:
@@ -101,6 +103,6 @@ if st.session_state.started:
             msg = response.choices[0].message.content
             st.session_state.messages.append({"role": "assistant", "content": msg})
             st.chat_message("assistant").write(msg)
-            requests.put(url=f'https://api.jsonbin.io/v3/b/{st.session_state.sessionID}', json=st.session_state.messages, headers=st.session_state.jb_headers)
+            requests.put(url=f'https://api.jsonbin.io/v3/b/{st.session_state.sessionID}', json={"language" : st.session_state.language, "messages" : st.session_state.messages}, headers=st.session_state.jb_headers)
             
             
