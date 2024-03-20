@@ -55,10 +55,10 @@ def load_session(id):
 if not st.session_state.started:
     st.markdown("<h1 style='color: #5e17eb; text-align: center'>Welcome to ScreenGPT 👨🏽‍⚕️ beta! <br> Please select language!</h1>", unsafe_allow_html=True)
     col0, col1, col2, col3= st.columns([0.3, 0.2, 0.2, 0.3])
-    col1.button("English", on_click=load_lang, kwargs={"lang" : "english"})
-    col2.button("Hungarian", on_click=load_lang, kwargs={"lang" : "hungarian"})
+    col1.button("English", on_click=load_lang, kwargs={"lang" : "english"}, use_container_width=True)
+    col2.button("Hungarian", on_click=load_lang, kwargs={"lang" : "hungarian"}, use_container_width=True)
     st.markdown(f"<h3 style='color: #5e17eb; text-align: center'>or <br> If you want to resume a previous session, you can enter the ID here.</h1>", unsafe_allow_html=True)
-    st.session_state['sessionID'] = st.text_input('ID')
+    st.session_state['sessionID'] = st.text_input('ID', label_visibility="hidden")
     if len(st.session_state.sessionID) > 0:
         loaded = load_session(st.session_state.sessionID)
         if loaded:
