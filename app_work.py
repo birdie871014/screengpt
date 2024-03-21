@@ -19,11 +19,16 @@ st.session_state.system_prompts = requests.get(url=f"https://api.jsonbin.io/v3/b
 def put_to_jsonbin():
     requests.put(url=f"https://api.jsonbin.io/v3/b/{ID}", json={"cervical" : st.session_state.system_prompts}, headers=st.session_state.jb_headers)
 
+def add_key():
+    st.session_state.system_prompts[str(len(st.session_state.system_prompts))] = "New"
+    put_to_jsonbin()
+    
 with st.sidebar:
     with st.form('system prompts'):
         for key in st.session_state.system_prompts.keys():
             st.session_state.system_prompts[key] = st.text_area(f'prompt key: {key}', value=st.session_state.system_prompts[key])
         st.form_submit_button("SAVE", on_click=put_to_jsonbin)
+    st.button("add", on_click=add_key)
 
 st.markdown("<h1 style='color: #5e17eb; text-align: center'>Welcome to ScreenGPT 👨🏽‍⚕️ <br> work version for cervical cacncer prevention topic</h1>", unsafe_allow_html=True)
 
@@ -45,16 +50,12 @@ else:
 if prompt := st.chat_input():
     st.session_state.messages.append({"role": "user", "content": prompt})
     st.chat_message("user").write(prompt)
-    if len(st.session_state.messages) == 5:
-        sysprompt = {"role": "system", "content": st.session_state.system_prompts['1']} 
-    elif len(st.session_state.messages) == 8:
-        sysprompt = {"role": "system", "content": st.session_state.system_prompts['2']}
-    elif len(st.session_state.messages) == 11:
-        sysprompt = {"role": "system", "content": st.session_state.system_prompts['3']}
-    elif len(st.session_state.messages) == 14:
-        sysprompt = {"role": "system", "content": st.session_state.system_prompts['4']}
-    st.session_state.messages.append(sysprompt)
-    st.chat_message("system").write(sysprompt)
+    if (len(st.session_state.messages)-5)%3 == 0:
+        key = str(int((len(st.session_state.messages)-5)/3)+1)
+        if key in st.session_state.system_prompts.keys():
+            sysprompt = {"role": "system", "content": st.session_state.system_prompts[key]} 
+            st.session_state.messages.append(sysprompt)
+            st.chat_message("system").write(sysprompt['content'])
     response = client.chat.completions.create(model="gpt-4", temperature=0.3, messages=st.session_state.messages)
     msg = response.choices[0].message.content
     st.session_state.messages.append({"role": "assistant", "content": msg})
