@@ -95,8 +95,11 @@ if st.session_state.started:
         if prompt := st.chat_input():
             st.session_state.messages.append({"role": "user", "content": prompt})
             st.chat_message("user").write(prompt)
-            if len(st.session_state.messages) == 4:
-                st.session_state.messages.append({"role": "system", "content": st.session_state.system_prompts['01']})
+            if (len(st.session_state.messages)-5)%3 == 0:
+                key = str(int((len(st.session_state.messages)-5)/3)+1)
+                if key in st.session_state.system_prompts.keys():
+                    sysprompt = {"role": "system", "content": st.session_state.system_prompts[key]} 
+                    st.session_state.messages.append(sysprompt)
             wait_info = st.info(st.session_state.texts['wait'])
             response = client.chat.completions.create(model="gpt-4", temperature=0.3, messages=st.session_state.messages)
             wait_info.empty()
