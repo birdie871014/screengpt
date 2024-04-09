@@ -19,6 +19,12 @@ with st.sidebar:
 if "started" not in st.session_state:
     st.session_state.started = False
 
+if "key" not in st.session_state:
+    st.session_state.key = ""
+
+if "stat_data" not in st.session_state:
+    st.session_state['stat_data'] = {}
+
 if "jb_headers" not in st.session_state:
     st.session_state.jb_headers = {'Content-Type': 'application/json', 'X-Master-Key': st.secrets["jsonBinKey"]}
         
@@ -35,7 +41,8 @@ def select_topic(topic):
     if topic == st.session_state.texts['cervical']:
         with open("./system_prompts.json") as io:
             st.session_state.system_prompts = json.load(io)['cervical']
-    st.session_state.messages.append({"role" : "system", "content" : st.session_state.system_prompts['init']})
+    st.session_state.messages.append({"role" : "system", "content" : st.session_state.system_prompts['structure'] + st.session_state.system_prompts['init'].format(st.session_state.language)})
+    st.session_state.nav_keys = list(st.session_state.system_prompts.keys())[3:-1]
 def load_session(id):
     url = f'https://api.jsonbin.io/v3/b/{id}/latest'
     headers = {
@@ -51,6 +58,18 @@ def load_session(id):
         st.error("An error occurred while loading session")
         st.session_state['sessionID'] = ""
         return False
+def choose_option(option, index):
+    st.session_state.messages.append({"role" : "user", "content" : actual_data['options'][st.session_state['language']][index]})
+    st.session_state.messages.append({"role" : "system", "content" : actual_data[option]['sysprompt'] + actual_data['question']})
+    for key in actual_data[option]['stat_data'].keys():
+        st.session_state.stat_data[key] = actual_data[option]['stat_data'][key]
+    wait_info = st.info(st.session_state.texts['wait'])
+    response = client.chat.completions.create(model="gpt-4", temperature=0.6, messages=st.session_state.messages)
+    wait_info.empty()
+    msg = response.choices[0].message.content
+    st.session_state.messages.append({"role": "assistant", "content": msg})
+    st.session_state['key'] = actual_data['next_key']
+    requests.put(url=f'https://api.jsonbin.io/v3/b/{st.session_state.sessionID}', json={"language" : st.session_state.language, "messages" : st.session_state.messages, "stat_data" : st.session_state["stat_data"]}, headers=st.session_state.jb_headers)
 
 if not st.session_state.started:
     st.markdown("<h1 style='color: #5e17eb; text-align: center'>Welcome to ScreenGPT 👨🏽‍⚕️ beta! <br> Please select language!</h1>", unsafe_allow_html=True)
@@ -72,14 +91,18 @@ if st.session_state.started:
         if msg["role"] != "system":
             st.chat_message(msg["role"]).write(msg["content"])
     if len(st.session_state.messages) == 1:
-        col0, col1 = st.columns([0.6, 0.4])
-        col1.button(st.session_state.texts['lifestyle'], on_click=select_topic, kwargs={"topic" : st.session_state.texts['lifestyle']}, use_container_width=True)
-        col1.button(st.session_state.texts['cervical'], on_click=select_topic, kwargs={"topic" : st.session_state.texts['cervical']}, use_container_width=True)
+        select_topic(st.session_state.texts['cervical'])
+        #col0, col1 = st.columns([0.6, 0.4])
+        #col1.button(st.session_state.texts['lifestyle'], on_click=select_topic, kwargs={"topic" : st.session_state.texts['lifestyle']}, use_container_width=True)
+        #col1.button(st.session_state.texts['cervical'], on_click=select_topic, kwargs={"topic" : st.session_state.texts['cervical']}, use_container_width=True)
+        st.rerun()
     elif len(st.session_state.messages) == 3:
         wait_info = st.info(st.session_state.texts['wait'])
-        response = client.chat.completions.create(model="gpt-4", temperature=0.2, messages=st.session_state.messages)
+        response = client.chat.completions.create(model="gpt-4", temperature=0.3, messages=st.session_state.messages)
         wait_info.empty()
-        msg = response.choices[0].message.content
+        ans = json.loads(response.choices[0].message.content)
+        msg = ans['message']
+        st.session_state['key'] = ans['key']
         st.session_state.messages.append({"role": "assistant", "content": msg})
         response = requests.post(url='https://api.jsonbin.io/v3/b', json={"language" : st.session_state.language, "messages" : st.session_state.messages}, headers=st.session_state.jb_headers)        
         st.session_state.sessionID = response.json()["metadata"]["id"]
@@ -91,21 +114,35 @@ if st.session_state.started:
                 st.markdown(f"<p style='text-align: justify'>{st.session_state.texts['ID_description']}</p>", unsafe_allow_html=True)
                 st.markdown(f"<p style='text-align: justify'>{st.session_state.texts['feedback']}</p>", unsafe_allow_html=True)
                 st.link_button(st.session_state.texts['feedback_label'], st.session_state.texts['feedback_url'])
-        
-        if prompt := st.chat_input():
-            st.session_state.messages.append({"role": "user", "content": prompt})
-            st.chat_message("user").write(prompt)
-            if (len(st.session_state.messages)-5)%3 == 0:
-                key = str(int((len(st.session_state.messages)-5)/3)+1)
-                if key in st.session_state.system_prompts.keys():
-                    sysprompt = {"role": "system", "content": st.session_state.system_prompts[key]} 
+        if st.session_state['key'] in st.session_state.nav_keys:
+            actual_data = st.session_state.system_prompts[st.session_state['key']]
+            for i in range(len(actual_data['options']['keys'])):
+                st.button(actual_data['options'][st.session_state['language']][i],on_click=choose_option, kwargs={"option" : actual_data['options']['keys'][i], "index" : i}, use_container_width=True)
+        else:
+            if prompt := st.chat_input():
+                st.session_state.messages.append({"role": "user", "content": prompt})
+                st.chat_message("user").write(prompt)
+                if st.session_state['key'] == 'gender_select':
+                    sysprompt = {"role": "system", "content": st.session_state.system_prompts['structure'] + st.session_state.system_prompts['gender_select']} 
                     st.session_state.messages.append(sysprompt)
-            wait_info = st.info(st.session_state.texts['wait'])
-            response = client.chat.completions.create(model="gpt-4", temperature=0.3, messages=st.session_state.messages)
-            wait_info.empty()
-            msg = response.choices[0].message.content
-            st.session_state.messages.append({"role": "assistant", "content": msg})
-            st.chat_message("assistant").write(msg)
-            requests.put(url=f'https://api.jsonbin.io/v3/b/{st.session_state.sessionID}', json={"language" : st.session_state.language, "messages" : st.session_state.messages}, headers=st.session_state.jb_headers)
-            
+                elif st.session_state['key'] == 'end':
+                    sysprompt = {"role": "system", "content": st.session_state.system_prompts['end']} 
+                    st.session_state.messages.append(sysprompt)
+                    st.session_state['key'] = 'free_conversation'
+                wait_info = st.info(st.session_state.texts['wait'])
+                response = client.chat.completions.create(model="gpt-4", temperature=0.6, messages=st.session_state.messages)
+                wait_info.empty()
+                try:
+                    ans = json.loads(response.choices[0].message.content)
+                    msg = ans['message']
+                    st.session_state['key'] = ans['key']
+                    for key in ans['stat_data'].keys():
+                        st.session_state['stat_data'][key] = ans['stat_data'][key]
+                except:
+                    msg = response.choices[0].message.content
+                            
+                st.session_state.messages.append({"role": "assistant", "content": msg})
+                st.chat_message("assistant").write(msg)
+                requests.put(url=f'https://api.jsonbin.io/v3/b/{st.session_state.sessionID}', json={"language" : st.session_state.language, "messages" : st.session_state.messages, "stat_data" : st.session_state["stat_data"]}, headers=st.session_state.jb_headers)
+                st.rerun()
             
