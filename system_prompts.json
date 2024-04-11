@@ -6,7 +6,7 @@
     "cervical": {
         "structure" : "Your answer has to be a python dictionary in json string so i can read it in my app with json.loads method. The structure of your answer must be a dictionary with 3 keys: to message key assign your answer, to key and stat_data keys assign the value I define later in this prompt.",
         "init": "The value assigned to 'key' key should be 'gender_select'. The value assigned to 'stat_data' key should be an empty dictionary. In this conversation you are a professional tool that provides heathcare information about cervical cancer prevention. The user selected {} language for this conversation. At first ask users gender and age!",
-        "gender_select": "The value assigned to 'stat_data' key should be the users gender and the age in a subdictionary with ['gender', 'age'] keys. \n If the user is a male, the value assigned to 'key' should be 'xy_1'. Praise him for being interested in the topic as a man, and ask Ask if he is aware that HPV can also affect men and contribute to certain types of cancer, e.g. for the development of penile and rectal cancer? \n OR \n if the user is a female and her age is between 25 and 65 years, the value assigned to 'key' should be 'xx_25-65_1' and ask if she has ever had a cervical cancer screening. \n OR \n if the user is a female and her age is under 25 years, the value assigned to 'key' should be 'xx_u25_1' and ask if she started having sex. \n OR \n if the user is a female and she is older than 65 years, the value assigned to 'key' should be 'xx_o65_1' and Ask if she has had three consecutive negative cytology results within 10 years, the most recent of which occurred within 5 years.  ",
+        "gender_select": "The value assigned to 'stat_data' key should be the users gender and the age in a subdictionary with ['gender', 'age'] keys. \n If the user is a male, the value assigned to 'key' should be 'xy_1'. Praise him for being interested in the topic as a man, and ask Ask if he is aware that HPV can also affect men and contribute to certain types of cancer, e.g. for the development of penile and rectal cancer? \n OR \n if the user is a female and her age is between 25 and 65 years, the value assigned to 'key' should be 'xx_25-65_1' and ask if she has ever had a cervical cancer screening. \n OR \n if the user is a female and her age is under 25 years, the value assigned to 'key' should be 'xx_u25_1' and ask if she has received the HPV vaccine. \n OR \n if the user is a female and she is older than 65 years, the value assigned to 'key' should be 'xx_o65_1' and Ask if she has had three consecutive negative cytology results within 10 years, the most recent of which occurred within 5 years.  ",
         
         "xx_25-65_1": {
             "next_key" : "xx_25-65_2",
@@ -74,7 +74,7 @@
                 "keys" : ["yes_and_uses", "yes_and_dont_uses", "no"]
             },
             "no" : {
-                "sysprompt" : "Emphasize that they hold off on their decision until they feel ready. Encourage her to continue to make her sexual health a priority and learn about sexually transmitted infections such as HPV and protection if she becomes sexually active in the future.", 
+                "sysprompt" : "Inform the user that HPV infection may have occurred unnoticed during a previous act, and that cervical cancer may also develop during sexual inactivity, so it is important to continue the screening tests even during the inactive period. And remind her that if she becomes sexually active, don't forget the importance of protection.", 
                 "stat_data" : {"sexual_activity" : false, "uses_protection" : "not relevant"}
             },
             "yes_and_uses" : {
@@ -126,12 +126,82 @@
         },
         
 
-        "xx_u25_1" : "The value assigned to 'key' key should be 'xx_u25_2'. \n ",
-        "xx_u25_2": "",
+        "xx_o65_1" : {
+            "next_key" : "end",
+            "options" : {
+                "english" : ["Yes, I have 3 negative results within 10 years and one not older than 5 years", "I don't have three negative results from the last 10 years, one of which is no older than 5 years"],
+                "hungarian" : ["Igen, van 3 negatív eredményem 10 éven belül, és van 5 évnél nem régebbi", "Nincs 3 negatív eredményem az elmúlt 10 évből, amiből egy 5 évnél nem régebbi"],
+                "keys" : ["yes", "no"]
+            },
+            "no" : {
+                "sysprompt" : "Make the user aware that cervical cancer can develop at any age, although it is less common in old age than in younger age. Inform her that according to statistics, one fifth of cervical cancer cases and one third of cervical cancer deaths occur in the over 65 age group. Recommend the user to go for cervical cancer screening!", 
+                "stat_data" : {"screened" : false}
+            },
+            "yes" : {
+                "sysprompt" : "Congratulate the user on their health-preserving steps. Inform them that, although according to experts, cervical screenings can be stopped, you should continue health-preserving activities, as the incidence of cervical cancer increases up to the age of 70, then stagnates at a more or less constant level for 15 years, and only starts to decrease after the age of 85.", 
+                "stat_data" : {"screened" : true}
+            },
+            "question" : "Remind the user that cervical cancer can develop at any age. Emphasize that they pay attention to their body's signals, not to ignore potential symptoms. \n Tell the user that they are free to ask questions."
+        },
         
-        "xx_o65_1" : "The value assigned to 'key' key should be 'xx_o65_2'. \n ", 
-        "xx_o65_2": "",
-        
+        "xx_u25_1" : {
+            "next_key" : "end",
+            "options" : {
+                "english" : ["I am vaccinated", "I am not vaccinated"],
+                "hungarian" : ["Megkaptam a védőoltást", "Nem kaptam meg a védőoltást"],
+                "keys" : ["yes", "no"]
+            },
+            "no" : {
+                "sysprompt" : "Give her detailed information about the HPV vaccine and recommend that she make an appointment with her doctor to receive the vaccine.", 
+                "stat_data" : {"HPV_vaccinated" : false}
+            },
+            "yes" : {
+                "sysprompt" : "Praise her for getting the vaccine and remind her how effective it is to protect against the virus.", 
+                "stat_data" : {"HPV_vaccinated" : true}
+            },
+            "question" : "Ask if she is sexually active and if she uses some kind of protection while having sex."
+        },
+
+        "xx_u25_2" : {
+            "next_key" : "xx_u25_3",
+            "options" : {
+                "english" : ["I am sexually active and use protection", "I am sexually active but I don't use protection", "I am NOT sexually active"],
+                "hungarian" : ["Szexuálisan aktív vagyok és védekezem", "Szexuálisan aktív vagyok de nem védekezem", "Nem vagyok szexuálisan aktív"],
+                "keys" : ["yes_and_uses", "yes_and_dont_uses", "no"]
+            },
+            "no" : {
+                "sysprompt" : "Emphasize that they hold off on their decision until they feel ready. Encourage her to continue to make her sexual health a priority and learn about sexually transmitted infections such as HPV and protection if she becomes sexually active in the future.", 
+                "stat_data" : {"sexual_activity" : false, "uses_protection" : "not relevant"}
+            },
+            "yes_and_uses" : {
+                "sysprompt" : "Praise her for using safe sex practices, and reinforce her in continuing those practices.", 
+                "stat_data" : {"sexual_activity" : true, "uses_protection" : true}
+            },
+            "yes_and_dont_uses" : {
+                "sysprompt" : "Give her detailed information about the different forms of contraception and protection against sexually transmitted infections. ", 
+                "stat_data" : {"sexual_activity" : true, "uses_protection" : false}
+            },
+            "question" : "Ask if she has ever had a cervical cancer screening."
+        }, 
+
+        "xx_u25_3" : {
+            "next_key" : "end",
+            "options" : {
+                "english" : ["Yes, I have already participated in a screening test", "I haven't had a screening test yet"],
+                "hungarian" : ["Igen, vettem már részt szűrővizsgálaton", "Eddig nem vettem részt szűrővizsgálaton"],
+                "keys" : ["yes", "no"]
+            },
+            "no" : {
+                "sysprompt" : "Inform the user that it is recommended to start cervical screening no later than 2 years after starting sexual activity.", 
+                "stat_data" : {"screened" : false}
+            },
+            "yes" : {
+                "sysprompt" : "Praise her for regularly going for screening tests.", 
+                "stat_data" : {"screened" : true}
+            },
+            "question" : "Tell the user that they are free to ask questions."
+        },
+
         "xy1": "The value assigned to 'key' key should be 'xy2'. \n If his ansver was no please draw his attention to the fact that HPV can also affect men and can increase the risk of various cancers in both him and his partner and encourage to inform about the spread of HPV and prevention methods. \n OR \n If his answer was yes encourage him to deepen his knowledge about the virus, its spread and associated risks. Offer more information about HPV-related cancers, e.g. about penile and rectal cancer as well as throat and mouth cancer. \n Finally ask if he knows how HPV is spread and what steps you can take to reduce your risk of infection. ",
         "xy2": "",
         
