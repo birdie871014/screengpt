@@ -234,14 +234,14 @@
                 "sysprompt" : "Encourage the user to deepen their knowledge about the virus, its spread and the associated risks.", 
                 "stat_data" : {"informedAboutHPV" : true}
             },
-            "question" : "Ask him if he knows how HPV is spread and what steps he can take to reduce the risk of infection."
+            "question" : "Ask him how knowledgeable he feels about HPV prevention."
         },
 
         "xy_2": {
             "next_key" : "xy_3",
             "options" : {
-                "english" : ["Yes, I am informed", "No, i am not well informed"],
-                "hungarian" : ["Igen, tájékozott vagyok", "Nem vagyok jól tájékozott"],
+                "english" : ["I am well informed", "I am not well informed"],
+                "hungarian" : ["Jól tájékozott vagyok", "Nem vagyok jól tájékozott"],
                 "keys" : ["yes", "no"]
             },
             "no" : {
