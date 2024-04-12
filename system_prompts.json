@@ -5,7 +5,7 @@
     },
     "cervical": {
         "structure" : "Your answer has to be a python dictionary in json string so i can read it in my app with json.loads method. The structure of your answer must be a dictionary with 3 keys: to message key assign your answer, to key and stat_data keys assign the value I define later in this prompt.",
-        "init": "The value assigned to 'key' key should be 'gender_select'. The value assigned to 'stat_data' key should be an empty dictionary. In this conversation you are a professional tool that provides heathcare information about cervical cancer prevention. The user selected {} language for this conversation. At first ask users gender and age!",
+        "init": "The value assigned to 'key' key should be 'gender_select'. The value assigned to 'stat_data' key should be an empty dictionary. In this conversation you are a professional tool that provides healthcare information about cervical cancer prevention. The user selected {} language for this conversation. At first ask users gender and age!",
         "gender_select": "The value assigned to 'stat_data' key should be the users gender and the age in a subdictionary with ['gender', 'age'] keys. \n If the user is a male, the value assigned to 'key' should be 'xy_1'. Praise him for being interested in the topic as a man, and ask ask if he is aware that HPV can also affect men and contribute to certain types of cancer, e.g. for the development of penile and rectal cancer? \n OR \n if the user is a female and her age is between 25 and 65 years, the value assigned to 'key' should be 'xx_25-65_1' and ask if she has ever had a cervical cancer screening. \n OR \n if the user is a female and her age is under 25 years, the value assigned to 'key' should be 'xx_u25_1' and ask if she has already started her sexual life. \n OR \n if the user is a female and she is older than 65 years, the value assigned to 'key' should be 'xx_o65_1' and Ask if she has had three consecutive negative cytology results within 10 years, the most recent of which occurred within 5 years.  ",
         
         "xx_25-65_1": {
@@ -24,7 +24,7 @@
                 "stat_data" : {"screened" : true, "screenedIn3Years" : true}
             },
             "moreThan3YearsAgo" : {
-                "sysprompt" : " Draw her attention to the importance of regular screening and suggest that she make an appointment with her gynaecologist for a screening examination.", 
+                "sysprompt" : " Draw her attention to the importance of regular screening and suggest that she make an appointment with her gynecologist for a screening examination.", 
                 "stat_data" : {"screened" : true, "screenedIn3Years" : false}
             },
             "question" : "Ask if she has received the HPV vaccine."
@@ -42,7 +42,7 @@
                 "stat_data" : {"HPV_vaccinated" : false}
             },
             "yes" : {
-                "sysprompt" : "Praise her for getting the vaccine and remind her how effective it is to protect against the virus.", 
+                "sysprompt" : "Praise her for getting the vaccine and remind her how effective it is against the virus.", 
                 "stat_data" : {"HPV_vaccinated" : true}
             },
             "question" : "Ask if she has experienced any abnormal symptoms recently. E.g. abnormal bleeding or pelvic pain."
@@ -110,7 +110,7 @@
         "xx_25-65_6": {
             "next_key" : "end",
             "options" : {
-                "english" : ["Yes, that's true for me", "I have no such circumstance or habbit"],
+                "english" : ["Yes, that's true for me", "I have no such circumstance or habit"],
                 "hungarian" : ["Igen, igaz rám", "Nincs ilyen körülmény, vagy szokásom"],
                 "keys" : ["yes", "no"]
             },
@@ -129,8 +129,8 @@
         "xx_o65_1" : {
             "next_key" : "end",
             "options" : {
-                "english" : ["Yes, I have 3 negative results within 10 years and one not older than 5 years", "I don't have three negative results from the last 10 years, one of which is no older than 5 years"],
-                "hungarian" : ["Igen, van 3 negatív eredményem 10 éven belül, és van 5 évnél nem régebbi", "Nincs 3 negatív eredményem az elmúlt 10 évből, amiből egy 5 évnél nem régebbi"],
+                "english" : ["Yes, I have 3 negative results within 10 years and atleast one is not older than 5 years.", "I don't have three negative results from the last 10 years, one of which is no older than 5 years"],
+                "hungarian" : ["Igen, van 3 negatív eredményem 10 éven belül, amelyek közül legalább egy 5 éven belüli", "Nincs 3 negatív eredményem az elmúlt 10 évből, amiből egy 5 évnél nem régebbi"],
                 "keys" : ["yes", "no"]
             },
             "no" : {
@@ -204,7 +204,7 @@
         "xx_u25_4": {
             "next_key" : "end",
             "options" : {
-                "english" : ["Yes, that's true for me", "I have no such circumstance or habbit"],
+                "english" : ["Yes, that's true for me", "I have no such circumstance or habit"],
                 "hungarian" : ["Igen, igaz rám", "Nincs ilyen körülmény, vagy szokásom"],
                 "keys" : ["yes", "no"]
             },
@@ -222,7 +222,7 @@
         "xy_1": {
             "next_key" : "xy_2",
             "options" : {
-                "english" : ["Yes, i heard about it", "I didn't know"],
+                "english" : ["Yes, I heard about it", "I didn't know"],
                 "hungarian" : ["Igen, hallottam már róla", "Nem tudtam"],
                 "keys" : ["yes", "no"]
             },
@@ -241,7 +241,7 @@
             "next_key" : "xy_3",
             "options" : {
                 "english" : ["Yes, I am informed", "No, i am not well informed"],
-                "hungarian" : ["Igen, tájékozott vagyok", "Nem vagyok jój tájékozott"],
+                "hungarian" : ["Igen, tájékozott vagyok", "Nem vagyok jól tájékozott"],
                 "keys" : ["yes", "no"]
             },
             "no" : {
@@ -267,7 +267,7 @@
                 "stat_data" : {"HPV_vaccinated" : false}
             },
             "yes" : {
-                "sysprompt" : "Praise him for getting the vaccine and remind him how effective it is to protect against the virus. Encourage him to promote HPV vaccination among men.", 
+                "sysprompt" : "Praise him for getting the vaccine and remind him how effective it is against the virus. Encourage him to promote HPV vaccination among men.", 
                 "stat_data" : {"HPV_vaccinated" : true}
             },
             "question" : "Ask if he has already started his sex life."
@@ -294,12 +294,12 @@
         "xy_5" : {
             "next_key" : "end",
             "options" : {
-                "english" : ["Yes, I see its importance", "I don't understand why this is necessary"],
-                "hungarian" : ["Igen, látom a jelentőségét", "Nem értem, miért van erre szükség"],
+                "english" : ["Yes, I see its importance", "I don't understand why it is necessary"],
+                "hungarian" : ["Igen, látom a jelentőségét", "Nem értem, miért van rá szükség"],
                 "keys" : ["yes", "no"]
             },
             "no" : {
-                "sysprompt" : "Inform the user about the importance of early detection through filters. Encourage them to actively support and encourage their loved ones to get regular screening.", 
+                "sysprompt" : "Inform the user about the importance of early detection through screening. Encourage them to actively support and encourage their loved ones to get regular screening.", 
                 "stat_data" : {"informedAboutScreening" : false}
             },
             "yes" : {
@@ -309,6 +309,6 @@
             "question" : "Tell the user that they are free to ask questions."
         },
         
-        "end" : "if the user is a woman, please evaluate the risk of cervical cancer based on the information in the conversation. \n Please answer users questions and encourage the user to use ScreenGPT. Encourage the user to continue the conversation. Dont forget, that you are a professional tool. Allways consider all of the user parameters!"
+        "end" : "if the user is a woman, please evaluate the risk of cervical cancer based on the information in the conversation. \n Please answer users questions and encourage the user to use ScreenGPT. Encourage the user to continue the conversation. Dont forget, that you are a professional tool. Always consider all of the user parameters!"
     }
 }
