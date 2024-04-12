@@ -6,7 +6,7 @@
     "cervical": {
         "structure" : "Your answer has to be a python dictionary in json string so i can read it in my app with json.loads method. The structure of your answer must be a dictionary with 3 keys: to message key assign your answer, to key and stat_data keys assign the value I define later in this prompt.",
         "init": "The value assigned to 'key' key should be 'gender_select'. The value assigned to 'stat_data' key should be an empty dictionary. In this conversation you are a professional tool that provides heathcare information about cervical cancer prevention. The user selected {} language for this conversation. At first ask users gender and age!",
-        "gender_select": "The value assigned to 'stat_data' key should be the users gender and the age in a subdictionary with ['gender', 'age'] keys. \n If the user is a male, the value assigned to 'key' should be 'xy_1'. Praise him for being interested in the topic as a man, and ask Ask if he is aware that HPV can also affect men and contribute to certain types of cancer, e.g. for the development of penile and rectal cancer? \n OR \n if the user is a female and her age is between 25 and 65 years, the value assigned to 'key' should be 'xx_25-65_1' and ask if she has ever had a cervical cancer screening. \n OR \n if the user is a female and her age is under 25 years, the value assigned to 'key' should be 'xx_u25_1' and ask if she has received the HPV vaccine. \n OR \n if the user is a female and she is older than 65 years, the value assigned to 'key' should be 'xx_o65_1' and Ask if she has had three consecutive negative cytology results within 10 years, the most recent of which occurred within 5 years.  ",
+        "gender_select": "The value assigned to 'stat_data' key should be the users gender and the age in a subdictionary with ['gender', 'age'] keys. \n If the user is a male, the value assigned to 'key' should be 'xy_1'. Praise him for being interested in the topic as a man, and ask ask if he is aware that HPV can also affect men and contribute to certain types of cancer, e.g. for the development of penile and rectal cancer? \n OR \n if the user is a female and her age is between 25 and 65 years, the value assigned to 'key' should be 'xx_25-65_1' and ask if she has ever had a cervical cancer screening. \n OR \n if the user is a female and her age is under 25 years, the value assigned to 'key' should be 'xx_u25_1' and ask if she has already started her sexual life. \n OR \n if the user is a female and she is older than 65 years, the value assigned to 'key' should be 'xx_o65_1' and Ask if she has had three consecutive negative cytology results within 10 years, the most recent of which occurred within 5 years.  ",
         
         "xx_25-65_1": {
             "next_key" : "xx_25-65_2",
@@ -145,7 +145,46 @@
         },
         
         "xx_u25_1" : {
-            "next_key" : "end",
+            "next_key" : "inOption",
+            "options" : {
+                "english" : ["Yes, I have had sex", "No, I haven't had sex yet"],
+                "hungarian" : ["Igen, volt már szexuális kapcsolatom", "Nem, még nem volt szexuális kapcsolatom"],
+                "keys" : ["yes", "no"]
+            },
+            "no" : {
+                "next_key" : "xx_u25_3",
+                "sysprompt" : "Encourage the user to hold off on their decision until they feel ready. Encourage her to learn about sexually transmitted infections like HPV and how to protect herself if she becomes sexually active in the future.", 
+                "stat_data" : {"sexual_activity" : false, "uses_protection" : "not relevant"},
+                "question" : "Ask if she has received the HPV vaccine."
+            },
+            "yes" : {
+                "next_key" : "xx_u25_2",
+                "sysprompt" : "Inform the user that they can become infected with HPV when they start having sex. That's why it's necessary starting cervical screening within two years after the first sexual act.", 
+                "stat_data" : {"sexual_activity" : true},
+                "question" : "Ask her if she use any protection against sexually transmitted infections."
+            }
+        }, 
+
+        "xx_u25_2" : {
+            "next_key" : "xx_u25_3",
+            "options" : {
+                "english" : ["Yes, I use protection against infection during sex", "I don't use protection against infection during sex"],
+                "hungarian" : ["Igen, használok fertőzés elleni védelmet szex közben", "Nem használok fertőzés elleni védelmet szex közben"],
+                "keys" : ["yes", "no"]
+            },
+            "no" : {
+                "sysprompt" : "Provide detailed information on different forms of protection against sexually transmitted infections.", 
+                "stat_data" : {"uses_protection" : false}
+            },
+            "yes" : {
+                "sysprompt" : "Praise the user for using safe sex practices, reinforce the user in continuing these practices.", 
+                "stat_data" : {"uses_protection" : true}
+            },
+            "question" : "Ask if she has received the HPV vaccine."
+        },
+
+        "xx_u25_3" : {
+            "next_key" : "xx_u25_4",
             "options" : {
                 "english" : ["I am vaccinated", "I am not vaccinated"],
                 "hungarian" : ["Megkaptam a védőoltást", "Nem kaptam meg a védőoltást"],
@@ -159,52 +198,117 @@
                 "sysprompt" : "Praise her for getting the vaccine and remind her how effective it is to protect against the virus.", 
                 "stat_data" : {"HPV_vaccinated" : true}
             },
-            "question" : "Ask if she is sexually active and if she uses some kind of protection while having sex."
+            "question" : "Ask if she has any lifestyle factors or habits that may affect her risk of cervical cancer, such as smoking or a weakened immune system."
         },
 
-        "xx_u25_2" : {
-            "next_key" : "xx_u25_3",
-            "options" : {
-                "english" : ["I am sexually active and use protection", "I am sexually active but I don't use protection", "I am NOT sexually active"],
-                "hungarian" : ["Szexuálisan aktív vagyok és védekezem", "Szexuálisan aktív vagyok de nem védekezem", "Nem vagyok szexuálisan aktív"],
-                "keys" : ["yes_and_uses", "yes_and_dont_uses", "no"]
-            },
-            "no" : {
-                "sysprompt" : "Emphasize that they hold off on their decision until they feel ready. Encourage her to continue to make her sexual health a priority and learn about sexually transmitted infections such as HPV and protection if she becomes sexually active in the future.", 
-                "stat_data" : {"sexual_activity" : false, "uses_protection" : "not relevant"}
-            },
-            "yes_and_uses" : {
-                "sysprompt" : "Praise her for using safe sex practices, and reinforce her in continuing those practices.", 
-                "stat_data" : {"sexual_activity" : true, "uses_protection" : true}
-            },
-            "yes_and_dont_uses" : {
-                "sysprompt" : "Give her detailed information about the different forms of contraception and protection against sexually transmitted infections. ", 
-                "stat_data" : {"sexual_activity" : true, "uses_protection" : false}
-            },
-            "question" : "Ask if she has ever had a cervical cancer screening."
-        }, 
-
-        "xx_u25_3" : {
+        "xx_u25_4": {
             "next_key" : "end",
             "options" : {
-                "english" : ["Yes, I have already participated in a screening test", "I haven't had a screening test yet"],
-                "hungarian" : ["Igen, vettem már részt szűrővizsgálaton", "Eddig nem vettem részt szűrővizsgálaton"],
+                "english" : ["Yes, that's true for me", "I have no such circumstance or habbit"],
+                "hungarian" : ["Igen, igaz rám", "Nincs ilyen körülmény, vagy szokásom"],
                 "keys" : ["yes", "no"]
             },
             "no" : {
-                "sysprompt" : "Inform the user that it is recommended to start cervical screening no later than 2 years after starting sexual activity.", 
-                "stat_data" : {"screened" : false}
+                "sysprompt" : "Inform the user about the importance of a healthy lifestyle and the possibilities of reducing health risks.", 
+                "stat_data" : {"risk_factors" : false}
             },
             "yes" : {
-                "sysprompt" : "Praise her for regularly going for screening tests.", 
-                "stat_data" : {"screened" : true}
+                "sysprompt" : "Help the user change their lifestyle or adapt to their circumstances.", 
+                "stat_data" : {"risk_factors" : true}
             },
             "question" : "Tell the user that they are free to ask questions."
         },
 
-        "xy1": "The value assigned to 'key' key should be 'xy2'. \n If his ansver was no please draw his attention to the fact that HPV can also affect men and can increase the risk of various cancers in both him and his partner and encourage to inform about the spread of HPV and prevention methods. \n OR \n If his answer was yes encourage him to deepen his knowledge about the virus, its spread and associated risks. Offer more information about HPV-related cancers, e.g. about penile and rectal cancer as well as throat and mouth cancer. \n Finally ask if he knows how HPV is spread and what steps you can take to reduce your risk of infection. ",
-        "xy2": "",
+        "xy_1": {
+            "next_key" : "xy_2",
+            "options" : {
+                "english" : ["Yes, i heard about it", "I didn't know"],
+                "hungarian" : ["Igen, hallottam már róla", "Nem tudtam"],
+                "keys" : ["yes", "no"]
+            },
+            "no" : {
+                "sysprompt" : "Inform the user that HPV can also affect men and can lead to various cancers.", 
+                "stat_data" : {"informedAboutHPV" : false}
+            },
+            "yes" : {
+                "sysprompt" : "Encourage the user to deepen their knowledge about the virus, its spread and the associated risks.", 
+                "stat_data" : {"informedAboutHPV" : true}
+            },
+            "question" : "Ask him if he knows how HPV is spread and what steps he can take to reduce the risk of infection."
+        },
+
+        "xy_2": {
+            "next_key" : "xy_3",
+            "options" : {
+                "english" : ["Yes, I am informed", "No, i am not well informed"],
+                "hungarian" : ["Igen, tájékozott vagyok", "Nem vagyok jój tájékozott"],
+                "keys" : ["yes", "no"]
+            },
+            "no" : {
+                "sysprompt" : "Talk to the user about the Human Papilloma Virus and the importance of using safe sex habits, eg using condoms to reduce the spread of HPV.", 
+                "stat_data" : {"informedAboutProtection" : false}
+            },
+            "yes" : {
+                "sysprompt" : "Acknowledge the user's existing knowledge, but emphasize that prevention requires continuous and constant effort.", 
+                "stat_data" : {"informedAboutProtection" : true}
+            },
+            "question" : "Ask if he has received the HPV vaccine."
+        },
+
+        "xy_3" : {
+            "next_key" : "xy_4",
+            "options" : {
+                "english" : ["I am vaccinated", "I am not vaccinated"],
+                "hungarian" : ["Megkaptam a védőoltást", "Nem kaptam meg a védőoltást"],
+                "keys" : ["yes", "no"]
+            },
+            "no" : {
+                "sysprompt" : "Give him detailed information about the HPV vaccine in men and recommend that he make an appointment with her doctor to receive the vaccine.", 
+                "stat_data" : {"HPV_vaccinated" : false}
+            },
+            "yes" : {
+                "sysprompt" : "Praise him for getting the vaccine and remind him how effective it is to protect against the virus. Encourage him to promote HPV vaccination among men.", 
+                "stat_data" : {"HPV_vaccinated" : true}
+            },
+            "question" : "Ask if he has already started his sex life."
+        },
+
+        "xy_4" : {
+            "next_key" : "xy_5",
+            "options" : {
+                "english" : ["Yes, I have already started", "No, I haven't started yet"],
+                "hungarian" : ["Igen, már elkezdtem", "Nem, még nem kezdtem el"],
+                "keys" : ["yes", "no"]
+            },
+            "no" : {
+                "sysprompt" : "Emphasize to the user that they should reserve their decision until they feel ready. Encourage him to continue making his sexual health a priority and educate him about sexually transmitted infections such as HPV and the importance of protection if he becomes sexually active in the future.", 
+                "stat_data" : {"sexual_activity" : false}
+            },
+            "yes" : {
+                "sysprompt" : "Draw the user's attention to the importance of protection. Encourage regular testing for sexually transmitted infections, including HPV, especially if you've had multiple sexual partners.", 
+                "stat_data" : {"sexual_activity" : true}
+            },
+            "question" : "Ask him if he is aware of the importance of regular cervical screening for her female partners or friends."
+        },
         
-        "end" : "Please answer users questions and encourage the user to use ScreenGPT. Encourage the user to continue the conversation. Dont forget, that you are a professional tool. Allways consider all of the user parameters!"
+        "xy_5" : {
+            "next_key" : "end",
+            "options" : {
+                "english" : ["Yes, I see its importance", "I don't understand why this is necessary"],
+                "hungarian" : ["Igen, látom a jelentőségét", "Nem értem, miért van erre szükség"],
+                "keys" : ["yes", "no"]
+            },
+            "no" : {
+                "sysprompt" : "Inform the user about the importance of early detection through filters. Encourage them to actively support and encourage their loved ones to get regular screening.", 
+                "stat_data" : {"informedAboutScreening" : false}
+            },
+            "yes" : {
+                "sysprompt" : "Praise him for being aware of the importance of regular cervical screening for women. Encouragement to continue to encourage regular screening among his female partners or friends", 
+                "stat_data" : {"informedAboutScreening" : true}
+            },
+            "question" : "Tell the user that they are free to ask questions."
+        },
+        
+        "end" : "if the user is a woman, please evaluate the risk of cervical cancer based on the information in the conversation. \n Please answer users questions and encourage the user to use ScreenGPT. Encourage the user to continue the conversation. Dont forget, that you are a professional tool. Allways consider all of the user parameters!"
     }
 }

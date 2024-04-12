@@ -59,8 +59,13 @@ def load_session(id):
         st.session_state['sessionID'] = ""
         return False
 def choose_option(option, index):
+    if actual_data['next_key'] == 'inOption':
+        st.session_state['key'] = actual_data[option]['next_key']
+        st.session_state.messages.append({"role" : "system", "content" : actual_data[option]['sysprompt'] + actual_data[option]['question']})
+    else:
+        st.session_state['key'] = actual_data['next_key']
+        st.session_state.messages.append({"role" : "system", "content" : actual_data[option]['sysprompt'] + actual_data['question']})
     st.session_state.messages.append({"role" : "user", "content" : actual_data['options'][st.session_state['language']][index]})
-    st.session_state.messages.append({"role" : "system", "content" : actual_data[option]['sysprompt'] + actual_data['question']})
     for key in actual_data[option]['stat_data'].keys():
         st.session_state.stat_data[key] = actual_data[option]['stat_data'][key]
     wait_info = st.info(st.session_state.texts['wait'])
@@ -68,7 +73,6 @@ def choose_option(option, index):
     wait_info.empty()
     msg = response.choices[0].message.content
     st.session_state.messages.append({"role": "assistant", "content": msg})
-    st.session_state['key'] = actual_data['next_key']
     requests.put(url=f'https://api.jsonbin.io/v3/b/{st.session_state.sessionID}', json={"language" : st.session_state.language, "messages" : st.session_state.messages, "stat_data" : st.session_state["stat_data"]}, headers=st.session_state.jb_headers)
 
 if not st.session_state.started:
