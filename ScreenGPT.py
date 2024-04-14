@@ -110,7 +110,6 @@ if st.session_state.started:
         ans = json.loads(response.choices[0].message.content)
         msg = ans['message']
         st.session_state['key'] = ans['key']
-        correct_branch(ans['stat_data'])
         st.session_state.messages.append({"role": "assistant", "content": msg})
         response = requests.post(url='https://api.jsonbin.io/v3/b', json={"language" : st.session_state.language, "messages" : st.session_state.messages}, headers=st.session_state.jb_headers)        
         st.session_state.sessionID = response.json()["metadata"]["id"]
@@ -144,6 +143,7 @@ if st.session_state.started:
                     ans = json.loads(response.choices[0].message.content)
                     msg = ans['message']
                     st.session_state['key'] = ans['key']
+                    correct_branch(ans['stat_data'])
                     for key in ans['stat_data'].keys():
                         st.session_state['stat_data'][key] = ans['stat_data'][key]
                 except:
