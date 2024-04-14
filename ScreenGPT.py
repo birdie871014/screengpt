@@ -74,7 +74,10 @@ def choose_option(option, index):
     msg = response.choices[0].message.content
     st.session_state.messages.append({"role": "assistant", "content": msg})
     requests.put(url=f'https://api.jsonbin.io/v3/b/{st.session_state.sessionID}', json={"language" : st.session_state.language, "messages" : st.session_state.messages, "stat_data" : st.session_state["stat_data"]}, headers=st.session_state.jb_headers)
-
+def correct_branch(data):
+    if data["gender"] in ["female", "nő"] and data["age"] < 65 and st.session_state['key'] == 'xx_o65_1':
+        st.session_state["key"] = "xx_25-65_1"
+        
 if not st.session_state.started:
     st.markdown("<h1 style='color: #5e17eb; text-align: center'>Welcome to ScreenGPT 👨🏽‍⚕️ beta! <br> Please select language!</h1>", unsafe_allow_html=True)
     col0, col1, col2, col3= st.columns([0.3, 0.2, 0.2, 0.3])
@@ -107,6 +110,7 @@ if st.session_state.started:
         ans = json.loads(response.choices[0].message.content)
         msg = ans['message']
         st.session_state['key'] = ans['key']
+        correct_branch(ans['stat_data'])
         st.session_state.messages.append({"role": "assistant", "content": msg})
         response = requests.post(url='https://api.jsonbin.io/v3/b', json={"language" : st.session_state.language, "messages" : st.session_state.messages}, headers=st.session_state.jb_headers)        
         st.session_state.sessionID = response.json()["metadata"]["id"]
