@@ -4,7 +4,7 @@
         "1": "According the provided data try to calculate BMI index. Give advice for "
     },
     "cervical": {
-        "structure" : "Your answer has to be a python dictionary in json string so i can read it in my app with json.loads method. The structure of your answer must be a dictionary with 3 keys: to message key assign your answer, to key and stat_data keys assign the value I define later in this prompt.",
+        "structure" : "In the first an second request your answer has to be a python dictionary in json string so i can read it in my app with json.loads method. The structure of your answer must be a dictionary with 3 keys: to message key assign your answer, to key and stat_data keys assign the value I define later in this prompt.",
         "init": "The value assigned to 'key' key should be 'gender_select'. The value assigned to 'stat_data' key should be an empty dictionary. In this conversation you are a professional tool that provides healthcare information about cervical cancer prevention. The user selected {} language for this conversation. At first ask users gender and age!",
         "gender_select": "The value assigned to 'stat_data' key should be the users gender and the age in a subdictionary with ['gender', 'age'] keys. \n If the user is a male, the value assigned to 'key' should be 'xy_1'. Praise him for being interested in the topic as a man, and ask ask if he is aware that HPV can also affect men and contribute to certain types of cancer, e.g. for the development of penile and rectal cancer? \n OR \n if the user is a female and her age is between 25 and 65 years, the value assigned to 'key' should be 'xx_25-65_1' and ask if she has ever had a cervical cancer screening. \n OR \n if the user is a female and her age is under 25 years, the value assigned to 'key' should be 'xx_u25_1' and ask if she has already started her sexual life. \n OR \n if the user is a female and she is older than 65 years, the value assigned to 'key' should be 'xx_o65_1' and Ask if she has had three consecutive negative cytology results within 10 years, the most recent of which occurred within 5 years.  ",
         
@@ -16,15 +16,15 @@
                 "keys" : ["no", "within3Years", "moreThan3YearsAgo"]
             },
             "no" : {
-                "sysprompt" : "Suggest that she make an appointment with her gynecologist for cervical cancer screening, and draw her attention to the role of regular screening in early detection.", 
+                "sysprompt" : "From here just answer without the dictionary structure! Suggest that she make an appointment with her gynecologist for cervical cancer screening, and draw her attention to the role of regular screening in early detection.", 
                 "stat_data" : {"screened" : false, "screenedIn3Years" : false}
             },
             "within3Years" : {
-                "sysprompt" : "Praise her for regularly going for screening tests.", 
+                "sysprompt" : "From here just answer without the dictionary structure! Praise her for regularly going for screening tests.", 
                 "stat_data" : {"screened" : true, "screenedIn3Years" : true}
             },
             "moreThan3YearsAgo" : {
-                "sysprompt" : " Draw her attention to the importance of regular screening and suggest that she make an appointment with her gynecologist for a screening examination.", 
+                "sysprompt" : "From here just answer without the dictionary structure!  Draw her attention to the importance of regular screening and suggest that she make an appointment with her gynecologist for a screening examination.", 
                 "stat_data" : {"screened" : true, "screenedIn3Years" : false}
             },
             "question" : "Ask if she has received the HPV vaccine."
@@ -134,11 +134,11 @@
                 "keys" : ["yes", "no"]
             },
             "no" : {
-                "sysprompt" : "Make the user aware that cervical cancer can develop at any age, although it is less common in old age than in younger age. Inform her that according to statistics, one fifth of cervical cancer cases and one third of cervical cancer deaths occur in the over 65 age group. Recommend the user to go for cervical cancer screening!", 
+                "sysprompt" : "From here just answer without the dictionary structure! Make the user aware that cervical cancer can develop at any age, although it is less common in old age than in younger age. Inform her that according to statistics, one fifth of cervical cancer cases and one third of cervical cancer deaths occur in the over 65 age group. Recommend the user to go for cervical cancer screening!", 
                 "stat_data" : {"screened" : false}
             },
             "yes" : {
-                "sysprompt" : "Congratulate the user on their health-preserving steps. Inform them that, although according to experts, cervical screenings can be stopped, you should continue health-preserving activities, as the incidence of cervical cancer increases up to the age of 70, then stagnates at a more or less constant level for 15 years, and only starts to decrease after the age of 85.", 
+                "sysprompt" : "From here just answer without the dictionary structure! Congratulate the user on their health-preserving steps. Inform them that, although according to experts, cervical screenings can be stopped, you should continue health-preserving activities, as the incidence of cervical cancer increases up to the age of 70, then stagnates at a more or less constant level for 15 years, and only starts to decrease after the age of 85.", 
                 "stat_data" : {"screened" : true}
             },
             "question" : "Remind the user that cervical cancer can develop at any age. Emphasize that they pay attention to their body's signals, not to ignore potential symptoms. \n Tell the user that they are free to ask questions."
@@ -153,13 +153,13 @@
             },
             "no" : {
                 "next_key" : "xx_u25_3",
-                "sysprompt" : "Encourage the user to hold off on their decision until they feel ready. Encourage her to learn about sexually transmitted infections like HPV and how to protect herself if she becomes sexually active in the future.", 
+                "sysprompt" : "From here just answer without the dictionary structure! Encourage the user to hold off on their decision until they feel ready. Encourage her to learn about sexually transmitted infections like HPV and how to protect herself if she becomes sexually active in the future.", 
                 "stat_data" : {"sexual_activity" : false, "uses_protection" : "not relevant"},
                 "question" : "Ask if she has received the HPV vaccine."
             },
             "yes" : {
                 "next_key" : "xx_u25_2",
-                "sysprompt" : "Inform the user that they can become infected with HPV when they start having sex. That's why it's necessary starting cervical screening within two years after the first sexual act.", 
+                "sysprompt" : "From here just answer without the dictionary structure! Inform the user that they can become infected with HPV when they start having sex. That's why it's necessary starting cervical screening within two years after the first sexual act.", 
                 "stat_data" : {"sexual_activity" : true},
                 "question" : "Ask her if she use any protection against sexually transmitted infections."
             }
@@ -227,11 +227,11 @@
                 "keys" : ["yes", "no"]
             },
             "no" : {
-                "sysprompt" : "Inform the user that HPV can also affect men and can lead to various cancers.", 
+                "sysprompt" : "From here just answer without the dictionary structure! Inform the user that HPV can also affect men and can lead to various cancers.", 
                 "stat_data" : {"informedAboutHPV" : false}
             },
             "yes" : {
-                "sysprompt" : "Encourage the user to deepen their knowledge about the virus, its spread and the associated risks.", 
+                "sysprompt" : "From here just answer without the dictionary structure! Encourage the user to deepen their knowledge about the virus, its spread and the associated risks.", 
                 "stat_data" : {"informedAboutHPV" : true}
             },
             "question" : "Ask him how knowledgeable he feels about HPV prevention."
