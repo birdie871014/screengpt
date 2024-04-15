@@ -65,10 +65,7 @@ def choose_option(option, index):
     else:
         st.session_state['key'] = actual_data['next_key']
         st.session_state.messages.append({"role" : "system", "content" : actual_data[option]['sysprompt'] + actual_data['question']})
-    if st.session_state['key'][-1] == "1":
-        st.session_state.messages.append({"role" : "user", "content" : actual_data['options'][st.session_state['language']][index].format(st.session_state['stat_data']['age'])})
-    else:
-        st.session_state.messages.append({"role" : "user", "content" : actual_data['options'][st.session_state['language']][index]})
+    st.session_state.messages.append({"role" : "user", "content" : actual_data['options'][st.session_state['language']][index]})
     for key in actual_data[option]['stat_data'].keys():
         st.session_state.stat_data[key] = actual_data[option]['stat_data'][key]
     wait_info = st.info(st.session_state.texts['wait'])
@@ -122,28 +119,6 @@ if st.session_state.started:
                 st.markdown(f"<p style='text-align: justify'>{st.session_state.texts['ID_description']}</p>", unsafe_allow_html=True)
                 st.markdown(f"<p style='text-align: justify'>{st.session_state.texts['feedback']}</p>", unsafe_allow_html=True)
                 st.link_button(st.session_state.texts['feedback_label'], st.session_state.texts['feedback_url'])
-        if st.session_state['key'] == 'gender_select':
-                actual_data = st.session_state.system_prompts['gender_select']
-                with st.form("gender_select"):
-                    c1, c2 = st.columns(2)
-                    gender = c1.selectbox(st.session_state.texts["gender"], st.session_state.texts["gender_options"])
-                    age = c2.number_input(label=st.session_state.texts['age'], min_value=0, step=1)
-                    submit = st.form_submit_button("OK", use_container_width=True)
-                    st.session_state['stat_data']['age'] = age
-                    if submit:
-                        if gender in ["Férfi", "Male"]:
-                            index = 3
-                        elif gender in ["Nő", "Female"]:
-                            if age < 25:
-                                index = 0
-                            elif 25 <= age < 65:
-                                index = 1
-                            else:
-                                index = 2
-                        choose_option(actual_data['options']['keys'][index], index)
-                        st.rerun()
-
-     
         if st.session_state['key'] in st.session_state.nav_keys:
             actual_data = st.session_state.system_prompts[st.session_state['key']]
             for i in range(len(actual_data['options']['keys'])):
@@ -152,14 +127,24 @@ if st.session_state.started:
             if prompt := st.chat_input():
                 st.session_state.messages.append({"role": "user", "content": prompt})
                 st.chat_message("user").write(prompt)
-                if st.session_state['key'] == 'end':
+                if st.session_state['key'] == 'gender_select':
+                    sysprompt = {"role": "system", "content": st.session_state.system_prompts['structure'] + st.session_state.system_prompts['gender_select']} 
+                    st.session_state.messages.append(sysprompt)
+                elif st.session_state['key'] == 'end':
                     sysprompt = {"role": "system", "content": st.session_state.system_prompts['end']} 
                     st.session_state.messages.append(sysprompt)
                     st.session_state['key'] = 'free_conversation'
                 wait_info = st.info(st.session_state.texts['wait'])
                 response = client.chat.completions.create(model="gpt-4", temperature=0.6, messages=st.session_state.messages)
                 wait_info.empty()
-                msg = response.choices[0].message.content
+                try:
+                    ans = json.loads(response.choices[0].message.content)
+                    msg = ans['message']
+                    st.session_state['key'] = ans['key']
+                    for key in ans['stat_data'].keys():
+                        st.session_state['stat_data'][key] = ans['stat_data'][key]
+                except:
+                    msg = response.choices[0].message.content
                             
                 st.session_state.messages.append({"role": "assistant", "content": msg})
                 st.chat_message("assistant").write(msg)
