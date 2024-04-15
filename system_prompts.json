@@ -153,7 +153,7 @@
                 "sysprompt" : "Help the user change their lifestyle or adapt to their circumstances.", 
                 "stat_data" : {"risk_factors" : true}
             },
-            "question" : "Evaluate the risk of cervical cancer based on the information in the conversation. Tell the user that they are free to ask questions."
+            "question" : "Evaluate the risk of cervical cancer in five sentences based on the information in the conversation. Tell the user that they are free to ask questions."
         },
         
 
@@ -247,7 +247,7 @@
                 "sysprompt" : "Help the user change their lifestyle or adapt to their circumstances.", 
                 "stat_data" : {"risk_factors" : true}
             },
-            "question" : "Evaluate the risk of cervical cancer based on the information in the conversation. Tell the user that they are free to ask questions."
+            "question" : "Evaluate the risk of cervical cancer in five sentences based on the yinformation in the conversation. Tell the user that they are free to ask questions."
         },
 
         "xy_1": {
