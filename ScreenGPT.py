@@ -127,7 +127,7 @@ if st.session_state.started:
                 with st.form("gender_select"):
                     c1, c2 = st.columns(2)
                     gender = c1.selectbox(st.session_state.texts["gender"], st.session_state.texts["gender_options"])
-                    age = c2.number_input(label=st.session_state.texts['age'], min_value=0, step=1)
+                    age = c2.number_input(label=st.session_state.texts['age'], min_value=18, max_value=100, step=1)
                     submit = st.form_submit_button("OK", use_container_width=True)
                     st.session_state['stat_data']['age'] = age
                     if submit:
