@@ -148,7 +148,7 @@ if st.session_state.started:
             actual_data = st.session_state.system_prompts[st.session_state['key']]
             for i in range(len(actual_data['options']['keys'])):
                 st.button(actual_data['options'][st.session_state['language']][i],on_click=choose_option, kwargs={"option" : actual_data['options']['keys'][i], "index" : i}, use_container_width=True)
-        else:
+        if st.session_state['key'] in ["end", "free_conversation"]:
             if prompt := st.chat_input():
                 st.session_state.messages.append({"role": "user", "content": prompt})
                 st.chat_message("user").write(prompt)
