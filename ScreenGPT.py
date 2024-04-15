@@ -24,7 +24,8 @@ with st.sidebar:
                 <a href="https://doktori.hu/index.php?menuid=192&lang=HU&sz_ID=9155">Dinya Elek</a>
                 </p>
                 """, unsafe_allow_html=True)
-    st.image("./images/Semmelweis_logo_Latin_BLACK_PNG.png", width=50)        
+    blank1, logo, blank2 = st.columns(3)
+    logo.image("./images/Semmelweis_logo_Latin_BLACK_PNG.png")        
     st.markdown("""
                 <div style="text-align: center; height: 40px; width:120px;  position: fixed; bottom: 20px">
                     <a href='https://www.linkedin.com/company/screengpt/about/'>
