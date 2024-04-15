@@ -11,20 +11,19 @@ with st.sidebar:
     st.image("./images/logo.png", use_column_width=True)
     st.markdown("<h1 style='color: #5e17eb'>created by</h1>", unsafe_allow_html=True)
     st.markdown("""
-                <p style="text-align: right; margin-bottom: 0px; font-family: serif; font-size: 20px"> 
+                <p style="text-align: center; margin-bottom: 0px; font-family: serif; font-size: 20px"> 
                 <a href="https://www.linkedin.com/in/viola-angyal/">Angyal Viola</a>
                 </p>
-                <p style="text-align: right; margin-bottom: 0px; font-family: serif; font-size: 20px"> 
+                <p style="text-align: center; margin-bottom: 0px; font-family: serif; font-size: 20px"> 
                 <a href="https://www.linkedin.com/in/%C3%A1d%C3%A1m-dr-bertalan-613805241/">Bertalan Ádám</a>
                 </p>
-                <p style="text-align: right; margin-bottom: 0px; font-family: serif; font-size: 20px"> 
+                <p style="text-align: center; margin-bottom: 0px; font-family: serif; font-size: 20px"> 
                 <a href="https://www.linkedin.com/in/kiss-tilla-bianka">Kiss Tilla Bianka</a>
                 </p>
-                <p style="text-align: right; margin-bottom: 30px; font-family: serif; font-size: 20px"> 
+                <p style="text-align: center; margin-bottom: 30px; font-family: serif; font-size: 20px"> 
                 <a href="https://doktori.hu/index.php?menuid=192&lang=HU&sz_ID=9155">Dinya Elek</a>
                 </p>
                 """, unsafe_allow_html=True)        
-    st.image("./images/Semmelweis_logo_Latin_BLACK_PNG.png")
     st.markdown("""
                 <div style="text-align: center; height: 40px; width:120px;  position: fixed; bottom: 20px">
                     <a href='https://www.linkedin.com/company/screengpt/about/'>
