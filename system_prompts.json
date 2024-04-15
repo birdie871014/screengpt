@@ -153,7 +153,7 @@
                 "sysprompt" : "Help the user change their lifestyle or adapt to their circumstances.", 
                 "stat_data" : {"risk_factors" : true}
             },
-            "question" : "Tell the user that they are free to ask questions."
+            "question" : "Evaluate the risk of cervical cancer based on the information in the conversation. Tell the user that they are free to ask questions."
         },
         
 
@@ -247,7 +247,7 @@
                 "sysprompt" : "Help the user change their lifestyle or adapt to their circumstances.", 
                 "stat_data" : {"risk_factors" : true}
             },
-            "question" : "Tell the user that they are free to ask questions."
+            "question" : "Evaluate the risk of cervical cancer based on the information in the conversation. Tell the user that they are free to ask questions."
         },
 
         "xy_1": {
@@ -340,6 +340,6 @@
             "question" : "Tell the user that they are free to ask questions."
         },
         
-        "end" : "if the user is a woman, please evaluate the risk of cervical cancer based on the information in the conversation. \n Please answer users questions and encourage the user to use ScreenGPT. Encourage the user to continue the conversation. Dont forget, that you are a professional tool. Always consider all of the user parameters!"
+        "end" : "Please answer users questions and encourage the user to use ScreenGPT. Encourage the user to continue the conversation. Dont forget, that you are a professional tool. Always consider all of the user parameters!"
     }
 }
