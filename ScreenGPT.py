@@ -89,7 +89,7 @@ def choose_option(option, index):
     for key in actual_data[option]['stat_data'].keys():
         st.session_state.stat_data[key] = actual_data[option]['stat_data'][key]
     wait_info = st.info(st.session_state.texts['wait'])
-    response = client.chat.completions.create(model="gpt-4o", temperature=0.6, messages=st.session_state.messages)
+    response = client.chat.completions.create(model="GPT-4o", temperature=0.6, messages=st.session_state.messages)
     wait_info.empty()
     msg = response.choices[0].message.content
     st.session_state.messages.append({"role": "assistant", "content": msg})
@@ -123,7 +123,7 @@ if st.session_state.started:
         st.rerun()
     elif len(st.session_state.messages) == 3:
         wait_info = st.info(st.session_state.texts['wait'])
-        response = client.chat.completions.create(model="gpt-4o", temperature=0.3, messages=st.session_state.messages)
+        response = client.chat.completions.create(model="GPT-4", temperature=0.3, messages=st.session_state.messages)
         wait_info.empty()
         ans = json.loads(response.choices[0].message.content)
         msg = ans['message']
@@ -174,7 +174,7 @@ if st.session_state.started:
                     st.session_state.messages.append(sysprompt)
                     st.session_state['key'] = 'free_conversation'
                 wait_info = st.info(st.session_state.texts['wait'])
-                response = client.chat.completions.create(model="gpt-4o", temperature=0.6, messages=st.session_state.messages)
+                response = client.chat.completions.create(model="GPT-4o", temperature=0.6, messages=st.session_state.messages)
                 wait_info.empty()
                 msg = response.choices[0].message.content
                             
