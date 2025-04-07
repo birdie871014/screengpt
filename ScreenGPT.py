@@ -2,6 +2,7 @@ from openai import OpenAI
 import streamlit as st
 import json
 import requests
+from datetime import datetime
 
 
 st.set_page_config(page_title="ScreenGPT", page_icon='./images/logo.png', menu_items={"About" : "https://www.linkedin.com/company/screengpt/about/"})
@@ -40,7 +41,7 @@ if "key" not in st.session_state:
     st.session_state.key = ""
 
 if "stat_data" not in st.session_state:
-    st.session_state['stat_data'] = {}
+    st.session_state['stat_data'] = {'resp_times' : []}
 
 if "jb_headers" not in st.session_state:
     st.session_state.jb_headers = {'Content-Type': 'application/json', 'X-Master-Key': st.secrets["jsonBinKey"]}
@@ -88,9 +89,12 @@ def choose_option(option, index):
         st.session_state.messages.append({"role" : "user", "content" : actual_data['options'][st.session_state['language']][index]})
     for key in actual_data[option]['stat_data'].keys():
         st.session_state.stat_data[key] = actual_data[option]['stat_data'][key]
+    start_time = datetime.now()
     wait_info = st.info(st.session_state.texts['wait'])
     response = client.chat.completions.create(model="gpt-4o", temperature=0.6, messages=st.session_state.messages)
     wait_info.empty()
+    end_time = datetime.now()
+    st.session_state.stat_data['resp_times'].append((end_time - start_time).total_seconds())
     msg = response.choices[0].message.content
     st.session_state.messages.append({"role": "assistant", "content": msg})
     requests.put(url=f'https://api.jsonbin.io/v3/b/{st.session_state.sessionID}', json={"language" : st.session_state.language, "messages" : st.session_state.messages, "stat_data" : st.session_state["stat_data"]}, headers=st.session_state.jb_headers)
@@ -122,9 +126,12 @@ if st.session_state.started:
         #col1.button(st.session_state.texts['cervical'], on_click=select_topic, kwargs={"topic" : st.session_state.texts['cervical']}, use_container_width=True)
         st.rerun()
     elif len(st.session_state.messages) == 3:
+        start_time = datetime.now()
         wait_info = st.info(st.session_state.texts['wait'])
         response = client.chat.completions.create(model="gpt-4", temperature=0.3, messages=st.session_state.messages)
         wait_info.empty()
+        end_time = datetime.now()
+        st.session_state.stat_data['resp_times'].append((end_time - start_time).total_seconds())
         ans = json.loads(response.choices[0].message.content)
         msg = ans['message']
         st.session_state['key'] = ans['key']
@@ -173,9 +180,12 @@ if st.session_state.started:
                     sysprompt = {"role": "system", "content": st.session_state.system_prompts['end']} 
                     st.session_state.messages.append(sysprompt)
                     st.session_state['key'] = 'free_conversation'
+                start_time = datetime.now()
                 wait_info = st.info(st.session_state.texts['wait'])
                 response = client.chat.completions.create(model="gpt-4o", temperature=0.6, messages=st.session_state.messages)
                 wait_info.empty()
+                end_time = datetime.now()
+                st.session_state.stat_data['resp_times'].append((end_time - start_time).total_seconds())
                 msg = response.choices[0].message.content
                             
                 st.session_state.messages.append({"role": "assistant", "content": msg})
