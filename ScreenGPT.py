@@ -7,9 +7,9 @@ from datetime import datetime
 
 st.set_page_config(page_title="ScreenGPT", page_icon='./images/logo.png', menu_items={"About" : "https://www.linkedin.com/company/screengpt/about/"})
 
-st.image("./images/banner.png", use_column_width=True)
+st.image("./images/banner.png", use_container_width=True)
 with st.sidebar:
-    st.image("./images/logo.png", use_column_width=True)
+    st.image("./images/logo.png", use_container_width=True)
     st.markdown("<h1 style='color: #5e17eb'>created by</h1>", unsafe_allow_html=True)
     st.markdown("""
                 <p style="text-align: center; margin-bottom: 0px; font-family: serif; font-size: 20px"> 
