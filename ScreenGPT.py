@@ -7,9 +7,9 @@ from datetime import datetime
 
 st.set_page_config(page_title="ScreenGPT", page_icon='./images/logo.png', menu_items={"About" : "https://www.linkedin.com/company/screengpt/about/"})
 
-st.image("./images/banner.png", use_container_width=True)
+st.image("./images/banner.png", width='stretch')
 with st.sidebar:
-    st.image("./images/logo.png", use_container_width=True)
+    st.image("./images/logo.png", width='stretch')
     st.markdown("<h1 style='color: #5e17eb'>created by</h1>", unsafe_allow_html=True)
     st.markdown("""
                 <p style="text-align: center; margin-bottom: 0px; font-family: serif; font-size: 20px"> 
@@ -103,8 +103,8 @@ def choose_option(option, index):
 if not st.session_state.started:
     st.markdown("<h1 style='color: #5e17eb; text-align: center'>Welcome to ScreenGPT 👨🏽‍⚕️ beta! <br> Please select language!</h1>", unsafe_allow_html=True)
     col0, col1, col2, col3= st.columns([0.3, 0.2, 0.2, 0.3])
-    col1.button("English", on_click=load_lang, kwargs={"lang" : "english"}, use_container_width=True)
-    col2.button("Hungarian", on_click=load_lang, kwargs={"lang" : "hungarian"}, use_container_width=True)
+    col1.button("English", on_click=load_lang, kwargs={"lang" : "english"}, width='stretch')
+    col2.button("Hungarian", on_click=load_lang, kwargs={"lang" : "hungarian"}, width='stretch')
     st.markdown(f"<h3 style='color: #5e17eb; text-align: center'>or <br> If you want to resume a previous session, you can enter the ID here.</h1>", unsafe_allow_html=True)
     st.session_state['sessionID'] = st.text_input('ID', label_visibility="hidden")
     if len(st.session_state.sessionID) > 0:
@@ -122,8 +122,8 @@ if st.session_state.started:
     if len(st.session_state.messages) == 1:
         select_topic(st.session_state.texts['cervical'])
         #col0, col1 = st.columns([0.6, 0.4])
-        #col1.button(st.session_state.texts['lifestyle'], on_click=select_topic, kwargs={"topic" : st.session_state.texts['lifestyle']}, use_container_width=True)
-        #col1.button(st.session_state.texts['cervical'], on_click=select_topic, kwargs={"topic" : st.session_state.texts['cervical']}, use_container_width=True)
+        #col1.button(st.session_state.texts['lifestyle'], on_click=select_topic, kwargs={"topic" : st.session_state.texts['lifestyle']}, width='stretch')
+        #col1.button(st.session_state.texts['cervical'], on_click=select_topic, kwargs={"topic" : st.session_state.texts['cervical']}, width='stretch')
         st.rerun()
     elif len(st.session_state.messages) == 3:
         start_time = datetime.now()
@@ -152,7 +152,7 @@ if st.session_state.started:
                     c1, c2 = st.columns(2)
                     gender = c1.selectbox(st.session_state.texts["gender"], st.session_state.texts["gender_options"])
                     age = c2.number_input(label=st.session_state.texts['age'], min_value=18, max_value=100, step=1)
-                    submit = st.form_submit_button("OK", use_container_width=True)
+                    submit = st.form_submit_button("OK", width='stretch')
                     st.session_state['stat_data']['age'] = age
                     if submit:
                         if gender in ["Férfi", "Male"]:
@@ -171,7 +171,7 @@ if st.session_state.started:
         if st.session_state['key'] in st.session_state.nav_keys:
             actual_data = st.session_state.system_prompts[st.session_state['key']]
             for i in range(len(actual_data['options']['keys'])):
-                st.button(actual_data['options'][st.session_state['language']][i],on_click=choose_option, kwargs={"option" : actual_data['options']['keys'][i], "index" : i}, use_container_width=True)
+                st.button(actual_data['options'][st.session_state['language']][i],on_click=choose_option, kwargs={"option" : actual_data['options']['keys'][i], "index" : i}, width='stretch')
         if st.session_state['key'] in ["end", "free_conversation"]:
             if prompt := st.chat_input():
                 st.session_state.messages.append({"role": "user", "content": prompt})
