@@ -1,0 +1,330 @@
+{
+  "option_sets": {
+    "yes_no": {
+      "keys": ["yes", "no"],
+      "english": ["Yes", "No"],
+      "hungarian": ["Igen", "Nem"]
+    },
+    "vaccination": {
+      "keys": ["yes", "no"],
+      "english": ["I am vaccinated", "I am not vaccinated"],
+      "hungarian": ["Megkaptam a védőoltást", "Nem kaptam meg"]
+    },
+    "screening_3y": {
+      "keys": ["no", "within3Years", "moreThan3YearsAgo"],
+      "english": [
+        "No, I didn't",
+        "Yes, within 3 years",
+        "Yes, more than 3 years ago"
+      ],
+      "hungarian": [
+        "Nem voltam",
+        "Három éven belül voltam",
+        "3 évnél régebben voltam"
+      ]
+    },
+    "sexual_activity_protection": {
+      "keys": ["active_protected", "active_unprotected", "inactive"],
+      "english": [
+        "I am sexually active and use protection",
+        "I am sexually active but don't use protection",
+        "I am not sexually active"
+      ],
+      "hungarian": [
+        "Szexuálisan aktív vagyok és védekezem",
+        "Szexuálisan aktív vagyok de nem védekezem",
+        "Nem vagyok szexuálisan aktív"
+      ]
+    },
+    "hsil_decision": {
+      "keys": ["control", "colposcopy"],
+      "hungarian": [
+        "6–12 hónap múlva kontroll",
+        "Kolposzkópos vizsgálat"
+      ],
+      "english": [
+        "Control in 6–12 months",
+        "Colposcopy"
+      ]
+    }
+  },
+
+  "messages": {
+    "lifestyle_init": {
+      "english": "In this conversation you are the assistant developed for assist lifestyle change. At first ask users gender, age, height and weight!",
+      "hungarian": "Ebben a beszélgetésben életmódváltást segítő asszisztens vagyok. Először kérlek add meg a nemedet, életkorodat, magasságodat és testsúlyodat!"
+    },
+    "ask_gender_age": {
+      "english": "Please tell me your gender and age.",
+      "hungarian": "Kérlek add meg a nemed és az életkorod."
+    },
+    "female_under_25_praise": {
+      "english": "Praise the user for consciously taking care of her health at such a young age.",
+      "hungarian": "Dicsérd meg a felhasználót, hogy már ilyen fiatalon tudatosan törődik az egészségével."
+    },
+    "female_25_65_info": {
+      "english": "Inform the user that she is at the age when regular cervical cancer screening is most important.",
+      "hungarian": "Tájékoztasd, hogy ebben az életkorban a legfontosabb a rendszeres méhnyakszűrés."
+    },
+    "female_over_65_praise": {
+      "english": "Praise the user for taking an active role in maintaining their health.",
+      "hungarian": "Dicsérd meg, hogy aktívan tesz az egészsége megőrzéséért."
+    },
+    "final_eval": {
+      "english": "Evaluate the risk of cervical cancer in five sentences based on the information provided. Tell the user they are free to ask questions.",
+      "hungarian": "Az eddigiek alapján öt mondatban értékeld a méhnyakrák kockázatát. Jelezd, hogy kérdezhet."
+    },
+    "hpv_age_recommendation": {
+      "hungarian": "30 éves kor felett a HPV szűrés kiemelten ajánlott. A HPV teszt a citológiai mintavétellel együtt is levehető.",
+      "english": "HPV screening is especially recommended over the age of 30. The HPV test can be taken together with cytology."
+    },
+    "hpv_test_question": {
+      "hungarian": "Történt Önnél HPV teszt?",
+      "english": "Have you had an HPV test?"
+    },
+    "hpv_negative_info": {
+      "hungarian": "HPV negatív eredmény esetén javasolt az ismételt szűrés 3–5 év múlva.",
+      "english": "In case of a negative HPV result, repeat screening is recommended in 3–5 years."
+    },
+    "hpv_positive_need_cytology": {
+      "hungarian": "HPV pozitív eredmény esetén, ha nem történt citológia, mindenképpen szükséges citológiai vizsgálat.",
+      "english": "If the HPV test is positive and cytology has not been performed, cytology is mandatory."
+    },
+    "cytology_question": {
+      "hungarian": "Történt citológiai vizsgálat?",
+      "english": "Was a cytology test performed?"
+    },
+    "cytology_negative_followup": {
+      "hungarian": "HPV pozitív, de citológia negatív eredmény esetén javasolt újabb szűrés 1–3 év múlva.",
+      "english": "HPV positive but cytology negative results require follow-up screening in 1–3 years."
+    },
+    "cytology_positive_hsil": {
+      "hungarian": "HPV pozitív és citológia pozitív eredmény esetén HSIL kockázatbecslés szükséges.",
+      "english": "If both HPV and cytology are positive, HSIL risk assessment is required."
+    },
+    "hsil_risk_info": {
+      "hungarian": "A HSIL kockázatbecslés nem csak a legfrissebb kenet eredményét veszi figyelembe, hanem egyéb tényezőket is.",
+      "english": "HSIL risk assessment considers not only the latest smear result but also additional factors."
+    },
+    "biomarker_info": {
+      "hungarian": "A kockázatbecslést biomarker vizsgálat segítheti.",
+      "english": "Risk assessment may be supported by biomarker testing."
+    },
+    "hsil_decision_question": {
+      "hungarian": "A HSIL kockázatbecslés alapján milyen további lépés javasolt?",
+      "english": "Based on HSIL risk assessment, what is the recommended next step?"
+    },
+    "colposcopy_info": {
+      "hungarian": "A kolposzkópia egy nagyító eszközzel végzett vizsgálat.",
+      "english": "Colposcopy uses a magnifying device to examine the cervix."
+    },
+    "biopsy_info": {
+      "hungarian": "Kolposzkópia során szövettani mintavétel történhet.",
+      "english": "Colposcopy may be followed by punch biopsy."
+    },
+    "conization_info": {
+      "hungarian": "A konizáció egy kisműtét.",
+      "english": "Conization is a minor surgical procedure."
+    },
+    "recurrence_risk_info": {
+      "hungarian": "Kiújulási kockázatbecslésre kerülhet sor.",
+      "english": "Recurrence risk assessment may be performed."
+    },
+    "cervical_cancer_info": {
+      "hungarian": "Kontroll vagy méhnyakrák diagnózis jöhet szóba.",
+      "english": "Follow-up or cervical cancer diagnosis may be established."
+    }
+  },
+
+  "flows": {
+    "lifestyle": {
+      "entry": "collect_data",
+      "states": {
+        "collect_data": {
+          "type": "input",
+          "message": "lifestyle_init",
+          "collect": ["gender", "age", "height_cm", "weight_kg"],
+          "next": "bmi_calc"
+        },
+        "bmi_calc": {
+          "type": "calculation",
+          "calculation": "BMI",
+          "inputs": ["height_cm", "weight_kg"],
+          "output": "bmi",
+          "next": "bmi_result"
+        },
+        "bmi_result": {
+          "type": "final",
+          "message": "According the provided data try to calculate BMI index. Give advice."
+        }
+      }
+    },
+
+    "cervical": {
+      "entry": "gender_age",
+      "states": {
+        "gender_age": {
+          "type": "input",
+          "message": "ask_gender_age",
+          "next_router": "female_age_router"
+        },
+        "female_under_25": {
+          "type": "question",
+          "message": "female_under_25_praise",
+          "question": "Have you already started your sexual life?",
+          "options": "yes_no",
+          "next": "female_under_25_vaccine"
+        },
+        "female_under_25_vaccine": {
+          "type": "question",
+          "question": "Have you received the HPV vaccine?",
+          "options": "vaccination",
+          "next": "final"
+        },
+        "female_25_65_screening": {
+          "type": "question",
+          "message": "female_25_65_info",
+          "question": "Have you ever had cervical cancer screening?",
+          "options": "screening_3y",
+          "next": "final"
+        },
+        "female_over_65": {
+          "type": "question",
+          "message": "female_over_65_praise",
+          "question": "Have you had three consecutive negative results within 10 years?",
+          "options": "yes_no",
+          "next": "final"
+        },
+        "final": {
+          "type": "final",
+          "message": "final_eval"
+        }
+      }
+    },
+
+    "hpv_extended": {
+      "entry": "age_recommendation",
+      "states": {
+        "age_recommendation": {
+          "type": "info",
+          "message": "hpv_age_recommendation",
+          "next": "hpv_test"
+        },
+        "hpv_test": {
+          "type": "question",
+          "question": "hpv_test_question",
+          "options": "yes_no",
+          "next_router": "hpv_test_router"
+        },
+        "hpv_negative": {
+          "type": "final",
+          "message": "hpv_negative_info"
+        },
+        "need_cytology_info": {
+          "type": "info",
+          "message": "hpv_positive_need_cytology",
+          "next": "cytology"
+        },
+        "cytology": {
+          "type": "question",
+          "question": "cytology_question",
+          "options": "yes_no",
+          "next_router": "cytology_router"
+        },
+        "cytology_negative": {
+          "type": "final",
+          "message": "cytology_negative_followup"
+        },
+        "hsil_info": {
+          "type": "info",
+          "message": "cytology_positive_hsil",
+          "next": "hsil_risk_info"
+        },
+        "hsil_risk_info": {
+          "type": "info",
+          "message": "hsil_risk_info",
+          "next": "biomarker_info"
+        },
+        "biomarker_info": {
+          "type": "info",
+          "message": "biomarker_info",
+          "next": "hsil_decision"
+        },
+        "hsil_decision": {
+          "type": "question",
+          "question": "hsil_decision_question",
+          "options": "hsil_decision",
+          "next_router": "hsil_decision_router"
+        },
+        "control_followup": {
+          "type": "final",
+          "message": "cervical_cancer_info"
+        },
+        "colposcopy": {
+          "type": "info",
+          "message": "colposcopy_info",
+          "next": "biopsy_info"
+        },
+        "biopsy_info": {
+          "type": "info",
+          "message": "biopsy_info",
+          "next": "conization_info"
+        },
+        "conization_info": {
+          "type": "info",
+          "message": "conization_info",
+          "next": "recurrence_risk_info"
+        },
+        "recurrence_risk_info": {
+          "type": "final",
+          "message": "recurrence_risk_info"
+        }
+      }
+    }
+  },
+
+  "routers": {
+    "female_age_router": {
+      "rules": [
+        { "if": { "gender": "female", "age_lt": 25 }, "goto": "female_under_25" },
+        { "if": { "gender": "female", "age_between": [25, 65] }, "goto": "female_25_65_screening" },
+        { "if": { "gender": "female", "age_gt": 65 }, "goto": "female_over_65" }
+      ]
+    },
+
+    "hpv_test_router": {
+      "rules": [
+        { "if": { "hpv_test": false }, "goto": "hpv_negative" },
+        { "if": { "hpv_test": true }, "goto": "need_cytology_info" }
+      ]
+    },
+
+    "cytology_router": {
+      "rules": [
+        { "if": { "cytology": false }, "goto": "need_cytology_info" },
+        { "if": { "cytology": true }, "goto": "hsil_info" }
+      ]
+    },
+
+    "hsil_decision_router": {
+      "rules": [
+        { "if": { "last_choice": "control" }, "goto": "control_followup" },
+        { "if": { "last_choice": "colposcopy" }, "goto": "colposcopy" }
+      ]
+    },
+
+    "post_colposcopy_router": {
+      "rules": [
+        { "if": { "histology": "negative" }, "goto": "control_6_12_months" },
+        { "if": { "histology": "hsil" }, "goto": "conization_info" }
+      ]
+    },
+
+    "post_conization_router": {
+      "rules": [
+        { "if": { "recurrence_risk": "low" }, "goto": "control_6_12_months" },
+        { "if": { "recurrence_risk": "high" }, "goto": "reconization_or_oncology" }
+      ]
+    }
+  }
+}
